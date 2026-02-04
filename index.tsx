@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import { ProductCard } from "./ProductCard";
+import { ProductCard, ProductCardSkeleton } from "./ProductCard";
 import { MasonryGrid } from "./MasonryGrid";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, ArrowRight, ChevronRight, Wind, Camera, Grid } from "lucide-react";
@@ -61,12 +61,22 @@ const PRODUCTS = [
 
 const App = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Simulate data fetching
+    const loadTimer = setTimeout(() => {
+        setIsLoading(false);
+    }, 2000);
+
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
     }, 5000);
-    return () => clearInterval(timer);
+
+    return () => {
+        clearInterval(timer);
+        clearTimeout(loadTimer);
+    }
   }, []);
 
   return (
@@ -312,16 +322,22 @@ const App = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {PRODUCTS.map((product) => (
-            <ProductCard
-              key={product.id}
-              title={product.title}
-              price={product.price}
-              category={product.category}
-              imageUrl={product.imageUrl}
-              audioUrl={product.audioUrl}
-            />
-          ))}
+          {isLoading ? (
+             Array.from({ length: 4 }).map((_, i) => (
+                <ProductCardSkeleton key={i} />
+             ))
+          ) : (
+            PRODUCTS.map((product) => (
+                <ProductCard
+                key={product.id}
+                title={product.title}
+                price={product.price}
+                category={product.category}
+                imageUrl={product.imageUrl}
+                audioUrl={product.audioUrl}
+                />
+            ))
+          )}
         </div>
       </section>
 

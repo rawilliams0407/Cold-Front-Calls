@@ -11,19 +11,19 @@ const config: Config = {
     extend: {
       colors: {
         obsidian: {
-          DEFAULT: "#050505", // Deep Black
-          light: "#121212",
-          highlight: "#1E1E1E"
+          DEFAULT: "#08081F", // Darker Deep Black Background
+          light: "#1A1A40",   // Lighter shade for footer/sections
+          highlight: "#262650" // Highlight shade
         },
-        carbon: '#121212',   // Card BG
+        carbon: '#151538',   // Card BG - harmonized with new Obsidian
         mist: '#9CA3AF',     // Text Color
         frost: {
-            100: '#e0f2fe', // White-Blue Tint
-            500: '#38bdf8', // Bright Ice Blue
+            100: '#e0f2fe', 
+            500: '#38bdf8', // Bright Highlight
         },
         ice: {
-          DEFAULT: "#0ea5e9", 
-          400: '#22d3ee', // Cyan Highlight
+          DEFAULT: "#0ea5e9", // Primary Blue
+          400: '#22d3ee', // Cyan Accent
           500: '#0ea5e9', // Primary Blue
           600: '#0284c7', // Deep Blue
           900: '#0c4a6e', // Dark Navy Glow
