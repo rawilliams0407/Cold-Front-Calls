@@ -1,72 +1,84 @@
 import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle, ArrowRight, Package, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { SEO } from '../components/SEO';
+import { motion } from 'framer-motion';
+import { CheckCircle, ArrowRight, Home } from 'lucide-react';
+import { useCartStore } from '@/stores/cartStore';
 
-export const SuccessPage = () => {
-    // Scroll to top on mount
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+export const SuccessPage: React.FC = () => {
+  const clearCart = useCartStore((state) => state.clearCart);
 
-    const orderNumber = Math.floor(100000 + Math.random() * 900000);
+  // Ensure cart is cleared on success page
+  useEffect(() => {
+    clearCart();
+  }, [clearCart]);
 
-    return (
-        <div className="min-h-screen bg-obsidian flex flex-col items-center justify-center p-6 text-center">
-            <SEO title="Order Success" description="Your order has been placed successfully. Thank you for choosing Cold Front Calls." />
-            
-            {/* Animated Glow Background */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] rounded-full" />
-            </div>
+  return (
+    <div className="min-h-screen bg-obsidian text-stone-light font-body flex items-center justify-center px-6">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: 'spring', damping: 20, stiffness: 200 }}
+        className="max-w-md w-full text-center"
+      >
+        {/* Success Icon */}
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 300 }}
+          className="w-24 h-24 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-8"
+        >
+          <CheckCircle className="text-emerald-400" size={48} />
+        </motion.div>
 
-            <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                className="relative z-10 max-w-2xl"
-            >
-                <div className="w-24 h-24 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-10">
-                    <CheckCircle className="text-emerald-500" size={48} />
-                </div>
+        {/* Heading */}
+        <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
+          Order Received!
+        </h1>
 
-                <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-6">Order <span className="text-platinum">Confirmed</span></h1>
-                <p className="text-stone-light text-xl mb-12 max-w-md mx-auto">
-                    Thank you for your purchase. We're getting the lathe ready for your custom calls.
-                </p>
+        <p className="text-stone-light text-lg mb-8 leading-relaxed">
+          Thank you for your order. We've received your request and will contact you shortly to confirm payment and shipping details.
+        </p>
 
-                <div className="grid md:grid-cols-2 gap-6 mb-12 text-left">
-                    <div className="bg-obsidian-light p-6 rounded-2xl border border-white/5">
-                        <div className="flex items-center gap-3 text-platinum mb-4">
-                            <Package size={20} />
-                            <span className="text-xs uppercase tracking-widest font-bold">Order Number</span>
-                        </div>
-                        <p className="text-2xl text-white font-display">#CFC-{orderNumber}</p>
-                    </div>
-                    <div className="bg-obsidian-light p-6 rounded-2xl border border-white/5">
-                        <div className="flex items-center gap-3 text-platinum mb-4">
-                            <Calendar size={20} />
-                            <span className="text-xs uppercase tracking-widest font-bold">Estimated Delivery</span>
-                        </div>
-                        <p className="text-2xl text-white font-display">2-3 Weeks</p>
-                    </div>
-                </div>
+        {/* Divider */}
+        <div className="h-px w-16 bg-white/20 mx-auto mb-8" />
 
-                <div className="space-y-6">
-                    <p className="text-stone-light">
-                        A confirmation email has been sent to your inbox. <br />
-                        We'll notify you as soon as your order ships.
-                    </p>
-                    
-                    <Link 
-                        to="/" 
-                        className="inline-flex items-center gap-3 px-10 py-4 bg-platinum text-obsidian font-bold rounded-full hover:bg-white transition-all uppercase tracking-widest text-sm shadow-xl group"
-                    >
-                        Back to Home
-                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                </div>
-            </motion.div>
+        {/* What's Next */}
+        <div className="bg-obsidian-light rounded-2xl border border-white/10 p-6 mb-8 text-left">
+          <h2 className="text-lg font-display font-bold text-white mb-4">
+            What's Next?
+          </h2>
+          <ul className="space-y-3 text-stone-light">
+            <li className="flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-platinum text-obsidian flex items-center justify-center flex-shrink-0 font-bold text-sm">
+                1
+              </span>
+              <span>We'll review your order and confirm availability</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-platinum text-obsidian flex items-center justify-center flex-shrink-0 font-bold text-sm">
+                2
+              </span>
+              <span>We'll reach out via email or phone for payment</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-platinum text-obsidian flex items-center justify-center flex-shrink-0 font-bold text-sm">
+                3
+              </span>
+              <span>Your calls will ship within 2-3 business days</span>
+            </li>
+          </ul>
         </div>
-    );
+
+        {/* Back to Shop */}
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 px-8 py-4 bg-platinum text-obsidian font-bold rounded-full hover:bg-white transition-all uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(228,228,231,0.2)] group hover:scale-[1.02]"
+        >
+          <Home size={18} />
+          Back to Shop
+          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+        </Link>
+      </motion.div>
+    </div>
+  );
 };

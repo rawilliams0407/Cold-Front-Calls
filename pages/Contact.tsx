@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Send, ChevronDown, Facebook, Phone } from "lucide-react";
+import { Mail, MessageCircle, Send, ChevronDown, Facebook, Phone } from "lucide-react";
+import { SEO } from "../components/SEO";
 
 const FAQS = [
     {
@@ -35,6 +36,8 @@ export const Contact = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
+
+        // Simulate form submission
         setTimeout(() => {
             setIsSubmitting(false);
             setIsSubmitted(true);
@@ -51,6 +54,11 @@ export const Contact = () => {
 
     return (
         <>
+            <SEO
+                title="Contact Us"
+                description="Get in touch with Cold Front Calls. Questions about our custom waterfowl calls, orders, or just want to share a hunting story? We're here."
+                keywords="contact cold front calls, duck call support, custom call inquiries, waterfowl hunting community"
+            />
             {/* Hero Section */}
             <section className="relative pt-32 pb-16 overflow-hidden">
                 <div className="absolute inset-0 z-0">
@@ -85,6 +93,7 @@ export const Contact = () => {
             {/* Contact Form & Info */}
             <section className="max-w-7xl mx-auto px-6 py-16">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    {/* Contact Form */}
                     <motion.div
                         initial={{ opacity: 0, x: -40 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -185,6 +194,7 @@ export const Contact = () => {
                                     ) : (
                                         <>
                                             Send Message
+                                            <Send size={16} />
                                         </>
                                     )}
                                 </button>
@@ -192,12 +202,14 @@ export const Contact = () => {
                         )}
                     </motion.div>
 
+                    {/* Contact Info & FAQ */}
                     <motion.div
                         initial={{ opacity: 0, x: 40 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
+                        {/* Quick Contact */}
                         <div className="liquid-glass rounded-2xl p-8 mb-8">
                             <h4 className="text-xl font-display text-white mb-6">Quick Contact</h4>
                             <div className="space-y-4">
@@ -231,6 +243,7 @@ export const Contact = () => {
                             </div>
                         </div>
 
+                        {/* FAQ Accordion */}
                         <div>
                             <h4 className="text-xl font-display text-white mb-6">Frequently Asked Questions</h4>
                             <div className="space-y-3">

@@ -28,7 +28,7 @@ const MasonryGrid = React.forwardRef<HTMLDivElement, MasonryGridProps>(
 
     // Only apply inline column count if explicitly provided (overrides CSS classes)
     if (columns) {
-      style.columnCount = columns;
+        style.columnCount = columns;
     }
 
     // Animation variants for child elements

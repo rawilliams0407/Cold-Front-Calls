@@ -73,7 +73,7 @@ export default async (request, context) => {
               <div style="background-color: #0a0a0a; border-radius: 12px; padding: 20px; border: 1px solid rgba(255,255,255,0.05);">
                 <p style="color: #a1a1aa; font-size: 14px; margin: 0; line-height: 1.6;">
                   ${customerName}<br>
-                  ${address.replace(/\\n/g, '<br>')}<br>
+                  ${address.replace(/\n/g, '<br>')}<br>
                   ${phone}
                 </p>
               </div>
@@ -209,4 +209,9 @@ Questions? Just reply to this email.
         console.error("Error sending confirmation email:", error);
         return new Response(JSON.stringify({ error: error.message }), { status: 500 });
     }
+};
+
+// Configure this function to trigger on form submissions
+export const config = {
+    path: "/.netlify/functions/submission-created",
 };
