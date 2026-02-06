@@ -1,0 +1,349 @@
+@import "tailwindcss";
+
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+    /* Obsidian Palette */
+    --color-obsidian: #08081F;
+    --color-obsidian-light: #12122A;
+    --color-obsidian-highlight: #1E1E3F;
+    --color-obsidian-glass: rgba(8, 8, 31, 0.7);
+
+    /* Platinum Palette */
+    --color-platinum: #E4E4E7;
+    --color-platinum-light: #F4F4F5;
+    --color-platinum-dark: #A1A1AA;
+    --color-platinum-shimmer: rgba(255, 255, 255, 0.5);
+
+    /* Stone Palette */
+    --color-stone: #57534E;
+    --color-stone-light: #A8A29E;
+
+    /* Ice Palette */
+    --color-ice: #0ea5e9;
+    --color-ice-300: #7dd3fc;
+    --color-ice-400: #22d3ee;
+    --color-ice-500: #0ea5e9;
+    --color-ice-600: #0284c7;
+    --color-ice-900: #0c4a6e;
+    --color-ice-glow: rgba(14, 165, 233, 0.6);
+
+    /* Frost Palette */
+    --color-frost-500: #38bdf8;
+
+    /* Misc */
+    --color-mist: #9CA3AF;
+}
+
+/* ===== FORCE DARK BACKGROUND ===== */
+html,
+body {
+    background-color: #08081F !important;
+    color: #E4E4E7;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    background-color: #08081F;
+    min-height: 100vh;
+}
+
+/* ===== CUSTOM ANIMATIONS ===== */
+
+/* Radar Text - Shimmer gradient moving through text */
+.radar-text {
+    background: linear-gradient(90deg,
+            #E4E4E7 0%,
+            #38bdf8 25%,
+            #0ea5e9 50%,
+            #38bdf8 75%,
+            #E4E4E7 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: radar-shimmer 3s linear infinite;
+}
+
+@keyframes radar-shimmer {
+    0% {
+        background-position: 200% center;
+    }
+
+    100% {
+        background-position: -200% center;
+    }
+}
+
+/* Front Animate - White to Blue color cycle, left to right */
+.front-animate {
+    background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #38bdf8 50%,
+        #0ea5e9 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: front-color-cycle 4s ease-in-out infinite alternate;
+}
+
+@keyframes front-color-cycle {
+    0% { background-position: 0% center; }
+    100% { background-position: 100% center; }
+}
+
+/* Storm Mask - Reveal effect on load */
+.storm-mask {
+    animation: storm-reveal 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+}
+
+@keyframes storm-reveal {
+    0% {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
+
+    100% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+/* Text Glow Ice - Neon blue text shadow */
+.text-glow-ice {
+    text-shadow:
+        0 0 10px rgba(14, 165, 233, 0.8),
+        0 0 20px rgba(14, 165, 233, 0.6),
+        0 0 40px rgba(14, 165, 233, 0.4),
+        0 0 80px rgba(14, 165, 233, 0.2);
+}
+
+/* Frost Glow Border - For hover states */
+.frost-glow {
+    box-shadow:
+        0 0 15px rgba(56, 189, 248, 0.4),
+        0 0 30px rgba(56, 189, 248, 0.2),
+        inset 0 0 20px rgba(56, 189, 248, 0.1);
+    border-color: #38bdf8 !important;
+}
+
+/* ===== UTILITY CLASSES ===== */
+@layer utilities {
+    .liquid-glass {
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+
+    /* Background Colors */
+    .bg-obsidian {
+        background-color: #08081F !important;
+    }
+
+    .bg-obsidian-light {
+        background-color: #12122A !important;
+    }
+
+    .bg-obsidian-highlight {
+        background-color: #1E1E3F !important;
+    }
+
+    .bg-ice-400 {
+        background-color: #22d3ee !important;
+    }
+
+    .bg-ice-500 {
+        background-color: #0ea5e9 !important;
+    }
+
+    .bg-ice-600 {
+        background-color: #0284c7 !important;
+    }
+
+    .bg-frost-500 {
+        background-color: #38bdf8 !important;
+    }
+
+    .bg-platinum {
+        background-color: #E4E4E7 !important;
+    }
+
+    /* Text Colors */
+    .text-obsidian {
+        color: #08081F !important;
+    }
+
+    .text-platinum {
+        color: #E4E4E7 !important;
+    }
+
+    .text-platinum-light {
+        color: #F4F4F5 !important;
+    }
+
+    .text-platinum-dark {
+        color: #A1A1AA !important;
+    }
+
+    .text-stone-light {
+        color: #A8A29E !important;
+    }
+
+    .text-ice-400 {
+        color: #22d3ee !important;
+    }
+
+    .text-ice-500 {
+        color: #0ea5e9 !important;
+    }
+
+    .text-frost-500 {
+        color: #38bdf8 !important;
+    }
+
+    /* Border Colors */
+    .border-ice-500 {
+        border-color: #0ea5e9 !important;
+    }
+
+    .border-ice-600 {
+        border-color: #0284c7 !important;
+    }
+
+    .border-frost-500 {
+        border-color: #38bdf8 !important;
+    }
+
+    /* Gradient Backgrounds */
+    .from-obsidian {
+        --tw-gradient-from: #08081F;
+    }
+
+    .via-obsidian {
+        --tw-gradient-via: #08081F;
+    }
+
+    .to-obsidian {
+        --tw-gradient-to: #08081F;
+    }
+}
+
+/* ===== PRODUCT CARD HOVER EFFECTS ===== */
+.product-card-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+}
+
+.product-card-hover:hover {
+    transform: scale(1.03) translateY(-8px);
+    border-color: #38bdf8;
+    box-shadow:
+        0 0 20px rgba(56, 189, 248, 0.3),
+        0 0 40px rgba(56, 189, 248, 0.15),
+        0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== CATEGORY CARD STYLES ===== */
+.category-card {
+    position: relative;
+    background-color: #12122A;
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-card:hover {
+    border-color: #38bdf8;
+    box-shadow:
+        0 0 30px rgba(56, 189, 248, 0.2),
+        0 0 60px rgba(14, 165, 233, 0.1);
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #08081F 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ===== KEYFRAME ANIMATIONS ===== */
+@keyframes morph {
+
+    0%,
+    100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+
+    50% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+}
+
+@keyframes liquid {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes kenBurns {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    100% {
+        transform: scale(1.15) translate(-1%, -1%);
+    }
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.7);
+    }
+}
+
+.animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ===== GLOBAL ===== */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+    background-color: #38bdf8;
+    color: #08081F;
+}
