@@ -12,12 +12,18 @@ export interface CartItem {
 
 interface CartState {
   items: CartItem[];
+  isCartOpen: boolean;
+  isUpsellOpen: boolean;
+  upsellCategory: 'duck' | 'goose' | null;
   addItem: (item: Omit<CartItem, 'quantity'>) => void;
   removeItem: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
   clearCart: () => void;
   getSubtotal: () => number;
   getItemCount: () => number;
+  setCartOpen: (isOpen: boolean) => void;
+  setUpsellOpen: (isOpen: boolean) => void;
+  handleCheckout: (navigate: (path: string) => void) => void;
   checkUpsellOpportunity: () => 'duck' | 'goose' | null;
 }
 
@@ -25,6 +31,9 @@ export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
+      isCartOpen: false,
+      isUpsellOpen: false,
+      upsellCategory: null,
 
       addItem: (item) => {
         set((state) => {
@@ -34,9 +43,13 @@ export const useCartStore = create<CartState>()(
               items: state.items.map((i) =>
                 i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
               ),
+              isCartOpen: true, // Auto-open cart on add
             };
           }
-          return { items: [...state.items, { ...item, quantity: 1 }] };
+          return {
+            items: [...state.items, { ...item, quantity: 1 }],
+            isCartOpen: true, // Auto-open cart on add
+          };
         });
       },
 
@@ -71,13 +84,30 @@ export const useCartStore = create<CartState>()(
         return get().items.reduce((count, item) => count + item.quantity, 0);
       },
 
+      setCartOpen: (isOpen) => set({ isCartOpen: isOpen }),
+
+      setUpsellOpen: (isOpen) => set({ isUpsellOpen: isOpen }),
+
+      handleCheckout: (navigate) => {
+        const upsell = get().checkUpsellOpportunity();
+        if (upsell) {
+          set({
+            upsellCategory: upsell,
+            isUpsellOpen: true,
+            isCartOpen: false
+          });
+        } else {
+          navigate('/checkout');
+        }
+      },
+
       checkUpsellOpportunity: () => {
         const items = get().items;
         const hasDuck = items.some(
-          (item) => item.category.toLowerCase() === 'duck'
+          (item) => item.category.toLowerCase().includes('duck')
         );
         const hasGoose = items.some(
-          (item) => item.category.toLowerCase() === 'goose'
+          (item) => item.category.toLowerCase().includes('goose')
         );
 
         // If has Duck but no Goose, suggest Goose
@@ -94,6 +124,8 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: 'coldfront-cart',
+      // Only persist items, not UI state
+      partialize: (state) => ({ items: state.items }),
     }
   )
 );
