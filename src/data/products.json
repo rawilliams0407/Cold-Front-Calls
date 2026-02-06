@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "title": "Saweet 16",
+        "price": 129.99,
+        "category": "Duck, Sub-Gauge",
+        "imageUrl": "/products/saweet-16-enhanced.png",
+        "audioUrl": "https://www.soundjay.com/nature/sounds/duck-quack-1.mp3"
+    },
+    {
+        "id": 2,
+        "title": "Perfect Storm",
+        "price": 189.99,
+        "category": "Goose",
+        "imageUrl": "/products/perfect-storm-enhanced.png",
+        "audioUrl": "https://www.soundjay.com/nature/sounds/duck-quack-1.mp3"
+    },
+    {
+        "id": 3,
+        "title": "Mile High",
+        "price": 189.99,
+        "category": "Goose",
+        "imageUrl": "/products/mile-high-enhanced.png",
+        "audioUrl": "https://www.soundjay.com/nature/sounds/duck-quack-1.mp3"
+    },
+    {
+        "id": 4,
+        "title": "Down Draft",
+        "price": 149.99,
+        "category": "Duck",
+        "imageUrl": "/products/down-draft-enhanced.png",
+        "audioUrl": "https://www.soundjay.com/nature/sounds/duck-quack-1.mp3"
+    },
+    {
+        "id": 5,
+        "title": "Alberta Clipper",
+        "price": 189.99,
+        "category": "Goose",
+        "imageUrl": "/products/alberta-clipper-enhanced.png",
+        "audioUrl": "https://www.soundjay.com/nature/sounds/duck-quack-1.mp3"
+    },
+    {
+        "id": 6,
+        "title": "Eclipse",
+        "price": 199.99,
+        "category": "Goose",
+        "imageUrl": "/products/eclipse-enhanced.png",
+        "audioUrl": "https://www.soundjay.com/nature/sounds/duck-quack-1.mp3"
+    }
+]
