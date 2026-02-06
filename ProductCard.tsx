@@ -103,7 +103,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="relative h-[75%] w-full bg-obsidian-highlight overflow-hidden">
         <img
           src={imageUrl}
-          alt={title}
+          alt={`Cold Front Calls - ${title} ${category} Call`}
           className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-80"
         />
 

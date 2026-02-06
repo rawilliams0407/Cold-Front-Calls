@@ -11,76 +11,67 @@ const config: Config = {
     extend: {
       colors: {
         obsidian: {
-          DEFAULT: "#08081F", // Darker Deep Black Background
-          light: "#1A1A40",   // Lighter shade for footer/sections
-          highlight: "#262650" // Highlight shade
+          DEFAULT: "#08081F", // Deep Black extraction
+          light: "#12122A",   // Lighter shade
+          highlight: "#1E1E3F", // Highlight shade
+          glass: "rgba(8, 8, 31, 0.7)", // Glass variant
         },
-        carbon: '#151538',   // Card BG - harmonized with new Obsidian
-        mist: '#9CA3AF',     // Text Color
-        frost: {
-            100: '#e0f2fe', 
-            500: '#38bdf8', // Bright Highlight
+        platinum: {
+          DEFAULT: "#E4E4E7", // Zinc-200 (Silver/Platinum)
+          light: "#F4F4F5",   // Zinc-100 (Bright Silver)
+          dark: "#A1A1AA",    // Zinc-400 (Darker Gunmetal)
+          shimmer: "rgba(255, 255, 255, 0.5)", // Shimmer overlay
+        },
+        stone: {
+          DEFAULT: "#57534E", // Stone-600
+          light: "#A8A29E",   // Stone-400
         },
         ice: {
-          DEFAULT: "#0ea5e9", // Primary Blue
-          400: '#22d3ee', // Cyan Accent
-          500: '#0ea5e9', // Primary Blue
-          600: '#0284c7', // Deep Blue
-          900: '#0c4a6e', // Dark Navy Glow
-          dim: "#0284c7",
-          glow: "rgba(14, 165, 233, 0.5)",
+          DEFAULT: "#0ea5e9", // Ice 500 (Primary Blue)
+          300: "#7dd3fc",     // Sky-300
+          400: "#22d3ee",     // Ice 400 (Cyan Accent - Sparks)
+          500: "#0ea5e9",     // Ice 500 (Primary Blue)
+          600: "#0284c7",     // Ice 600 (Deep Blue - Depth/Hover)
+          900: "#0c4a6e",     // Sky-900
+          glow: "rgba(14, 165, 233, 0.6)",
         },
+        frost: {
+          500: "#38bdf8",     // Frost 500 (Bright Highlight - Glowing Borders/Text)
+        },
+        mist: "#9CA3AF", // Gray-400
       },
       fontFamily: {
-        display: ["Teko", "sans-serif"], // Maps to font-teko in your HTML
-        teko: ["Teko", "sans-serif"],    // Alias for direct use
-        body: ["Inter", "sans-serif"],
-        inter: ["Inter", "sans-serif"],  // Alias for direct use
+        display: ["Playfair Display", "serif"], // Premium Heritage
+        body: ["Inter", "sans-serif"],          // Clean Modern
+        teko: ["Teko", "sans-serif"],           // Keep for specific technical data if needed
       },
       backgroundImage: {
-        'swamp': "url('https://images.unsplash.com/photo-1599589658826-6b2746465e94?q=80&w=2574&auto=format&fit=crop')",
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'grid-pattern': "linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
       },
-      backgroundSize: {
-        'grid': '40px 40px',
-      },
-      letterSpacing: {
-        'super-wide': '0.3em',
-      },
-      boxShadow: {
-        'neon-blue': '0 0 20px 2px rgba(14, 165, 233, 0.4)',
-      },
       animation: {
-        'cold-front': 'cold-front 8s ease-in-out infinite',
-        'radar': 'radar 4s linear infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'bounce-bar': 'bounce 1.2s infinite ease-in-out',
-        'scan-vertical': 'scanVertical 3s ease-in-out infinite',
+        'slow-morph': 'morph 8s ease-in-out infinite',
+        'liquid-flow': 'liquid 15s ease-in-out infinite',
+        'shimmer': 'shimmer 2.5s linear infinite',
+        'ken-burns': 'kenBurns 20s ease-out infinite alternate',
       },
       keyframes: {
-        'cold-front': {
-          '0%, 100%': { 
-            'background-size': '200% 200%',
-            'background-position': 'left center'
-          },
-          '50%': { 
-            'background-size': '200% 200%',
-            'background-position': 'right center'
-          },
+        morph: {
+          '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+          '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
         },
-        radar: {
-            '0%': { 'background-position': '100% 50%' },
-            '100%': { 'background-position': '0% 50%' }
+        liquid: {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
         },
-        bounce: {
-            '0%, 100%': { height: '20%' },
-            '50%': { height: '100%' }
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
         },
-        scanVertical: {
-            '0%': { top: '0%', opacity: '0' },
-            '10%': { opacity: '1' },
-            '90%': { opacity: '1' },
-            '100%': { top: '95%', opacity: '0' }
+        kenBurns: {
+          '0%': { transform: 'scale(1) translate(0, 0)' },
+          '100%': { transform: 'scale(1.15) translate(-1%, -1%)' },
         }
       },
     },
