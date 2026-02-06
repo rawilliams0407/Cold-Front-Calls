@@ -1,245 +1,192 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingBag, User, Mail, Phone, MapPin } from 'lucide-react';
-import { useCartStore } from '@/stores/cartStore';
+import { CreditCard, Truck, ShieldCheck, ArrowLeft, Send } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCartStore } from '../stores/cartStore';
+import { SEO } from '../components/SEO';
 
-export const CheckoutPage: React.FC = () => {
+export const CheckoutPage = () => {
   const navigate = useNavigate();
   const { items, getSubtotal, clearCart } = useCartStore();
-  const orderDetailsRef = useRef<HTMLTextAreaElement>(null);
-  
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Generate order details string for the hidden field
-  const generateOrderDetails = () => {
-    return items
-      .map(
-        (item) =>
-          `${item.name} (${item.category}) x${item.quantity} - $${(
-            item.price * item.quantity
-          ).toFixed(2)}`
-      )
-      .join('\n') + `\n\nSubtotal: $${getSubtotal().toFixed(2)}`;
-  };
-
-  // Update hidden field whenever items change
-  useEffect(() => {
-    if (orderDetailsRef.current) {
-      orderDetailsRef.current.value = generateOrderDetails();
-    }
-  }, [items]);
-
-  // Redirect if cart is empty
-  useEffect(() => {
-    if (items.length === 0) {
-      navigate('/');
-    }
-  }, [items, navigate]);
-
-  if (items.length === 0) {
-    return null;
+  // If cart is empty, redirect to shop
+  if (items.length === 0 && !isSubmitting) {
+    return (
+      <div className="min-h-screen bg-obsidian flex flex-col items-center justify-center p-6 text-center">
+        <h1 className="text-3xl font-display font-bold text-white mb-4">Your cart is empty</h1>
+        <Link to="/shop" className="text-platinum hover:text-white transition-colors underline underline-offset-4">
+          Return to Shop
+        </Link>
+      </div>
+    );
   }
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+      // Netlify Forms Submission
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+      
+      // Simulate payment processing delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      clearCart();
+      navigate('/success');
+    } catch (error) {
+      console.error("Form submission error:", error);
+      alert("There was an error processing your order. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-obsidian pt-28 pb-16">
+    <div className="min-h-screen bg-obsidian text-stone-light pt-20 pb-32">
+      <SEO title="Checkout" description="Complete your order for premium Cold Front Calls custom waterfowl calls." />
+      
       <div className="max-w-6xl mx-auto px-6">
-        {/* Back Button */}
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-stone-light hover:text-white transition-colors mb-8"
-        >
-          <ArrowLeft size={18} />
-          Back to Shop
+        <Link to="/shop" className="inline-flex items-center gap-2 text-stone-light hover:text-white transition-colors mb-12 group">
+          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+          Continue Shopping
         </Link>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Order Summary */}
+        <div className="grid lg:grid-cols-2 gap-20">
+          {/* Checkout Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
           >
-            <h2 className="text-2xl font-display font-bold text-white mb-6 flex items-center gap-3">
-              <ShoppingBag className="text-platinum" />
-              Order Summary
-            </h2>
+            <h1 className="text-4xl font-display font-bold text-white mb-8 flex items-center gap-4">
+              <Truck className="text-platinum" />
+              Shipping Details
+            </h1>
 
-            <div className="space-y-4 mb-8">
-              {items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-4 p-4 bg-obsidian-light rounded-xl border border-white/5"
-                >
-                  <div className="w-20 h-20 rounded-lg overflow-hidden bg-obsidian-highlight flex-shrink-0">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-white font-display font-medium">
-                      {item.name}
-                    </h3>
-                    <p className="text-xs text-stone-light uppercase tracking-wider">
-                      {item.category}
-                    </p>
-                    <div className="flex justify-between items-center mt-2">
-                      <span className="text-white/60">Qty: {item.quantity}</span>
-                      <span className="text-platinum font-bold">
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
+            <form 
+              name="checkout" 
+              method="POST" 
+              data-netlify="true" 
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
+              <input type="hidden" name="form-name" value="checkout" />
+              {/* Cart Data for Netlify */}
+              <input type="hidden" name="cart-items" value={JSON.stringify(items.map(i => `${i.name} (x${i.quantity})`))} />
+              <input type="hidden" name="total-amount" value={getSubtotal().toFixed(2)} />
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-widest font-bold text-platinum/60">First Name</label>
+                  <input required name="first-name" type="text" className="w-full bg-obsidian-light border border-white/10 rounded-xl px-4 py-3 text-white focus:border-platinum outline-none transition-colors" />
                 </div>
-              ))}
-            </div>
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-widest font-bold text-platinum/60">Last Name</label>
+                  <input required name="last-name" type="text" className="w-full bg-obsidian-light border border-white/10 rounded-xl px-4 py-3 text-white focus:border-platinum outline-none transition-colors" />
+                </div>
+              </div>
 
-            {/* Totals */}
-            <div className="bg-obsidian-light rounded-xl p-6 border border-white/5 space-y-3">
-              <div className="flex justify-between text-stone-light">
-                <span>Subtotal</span>
-                <span>${getSubtotal().toFixed(2)}</span>
+              <div className="space-y-2">
+                <label className="text-xs uppercase tracking-widest font-bold text-platinum/60">Email Address</label>
+                <input required name="email" type="email" className="w-full bg-obsidian-light border border-white/10 rounded-xl px-4 py-3 text-white focus:border-platinum outline-none transition-colors" />
               </div>
-              <div className="flex justify-between text-stone-light">
-                <span>Shipping</span>
-                <span className="text-ice-400">Calculated after order</span>
+
+              <div className="space-y-2">
+                <label className="text-xs uppercase tracking-widest font-bold text-platinum/60">Shipping Address</label>
+                <input required name="address" type="text" className="w-full bg-obsidian-light border border-white/10 rounded-xl px-4 py-3 text-white focus:border-platinum outline-none transition-colors" />
               </div>
-              <div className="h-px bg-white/10 my-4" />
-              <div className="flex justify-between text-white text-xl font-display font-bold">
-                <span>Total</span>
-                <span>${getSubtotal().toFixed(2)}</span>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="md:col-span-2 space-y-2">
+                  <label className="text-xs uppercase tracking-widest font-bold text-platinum/60">City</label>
+                  <input required name="city" type="text" className="w-full bg-obsidian-light border border-white/10 rounded-xl px-4 py-3 text-white focus:border-platinum outline-none transition-colors" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-widest font-bold text-platinum/60">State</label>
+                  <input required name="state" type="text" className="w-full bg-obsidian-light border border-white/10 rounded-xl px-4 py-3 text-white focus:border-platinum outline-none transition-colors" />
+                </div>
               </div>
-            </div>
+
+              <div className="pt-8 border-t border-white/5 space-y-8">
+                <div className="flex items-center gap-4 text-white">
+                  <CreditCard className="text-platinum" />
+                  <h2 className="text-2xl font-display font-medium">Payment Information</h2>
+                </div>
+                
+                <div className="bg-obsidian-highlight/30 p-6 rounded-2xl border border-white/5 flex items-start gap-4">
+                  <ShieldCheck className="text-emerald-500 mt-1 flex-shrink-0" />
+                  <p className="text-sm leading-relaxed">
+                    This is a secure mock checkout. Clicking "Complete Order" will simulate a transaction and clear your cart for demonstration purposes.
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-5 bg-platinum text-obsidian font-bold rounded-full hover:bg-white transition-all uppercase tracking-[0.2em] text-sm shadow-[0_0_30px_rgba(228,228,231,0.2)] flex items-center justify-center gap-3 disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    'Processing Order...'
+                  ) : (
+                    <>
+                      <Send size={18} />
+                      Complete Order — ${getSubtotal().toFixed(2)}
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
           </motion.div>
 
-          {/* Checkout Form */}
+          {/* Order Summary */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
+            className="lg:sticky lg:top-32 h-fit"
           >
-            <h2 className="text-2xl font-display font-bold text-white mb-6">
-              Your Information
-            </h2>
-
-            <form
-              name="order"
-              method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
-              action="/success"
-              className="space-y-6"
-            >
-              {/* Netlify Form Handling */}
-              <input type="hidden" name="form-name" value="order" />
-              <p className="hidden">
-                <label>
-                  Don't fill this out: <input name="bot-field" />
-                </label>
-              </p>
+            <div className="bg-obsidian-light rounded-3xl border border-white/10 p-8 shadow-2xl">
+              <h2 className="text-2xl font-display font-bold text-white mb-8 border-b border-white/5 pb-4">Order Summary</h2>
               
-              {/* Hidden Order Details */}
-              <textarea
-                ref={orderDetailsRef}
-                name="order_details"
-                defaultValue={generateOrderDetails()}
-                className="hidden"
-                aria-hidden="true"
-              />
-
-              {/* Name */}
-              <div>
-                <label className="flex items-center gap-2 text-stone-light text-sm mb-2">
-                  <User size={14} />
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full px-4 py-3 bg-obsidian-light rounded-xl border border-white/10 text-white placeholder-white/30 focus:border-platinum focus:outline-none transition-colors"
-                  placeholder="John Doe"
-                />
+              <div className="space-y-6 mb-8 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                {items.map((item) => (
+                  <div key={item.id} className="flex gap-4">
+                    <div className="w-20 h-20 rounded-xl bg-obsidian-highlight overflow-hidden flex-shrink-0">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-white font-medium">{item.name}</h3>
+                      <p className="text-xs text-stone-light uppercase tracking-wider mt-1">{item.category}</p>
+                      <div className="flex justify-between items-center mt-2">
+                        <span className="text-sm text-stone-light">Qty: {item.quantity}</span>
+                        <span className="text-platinum font-bold">${(item.price * item.quantity).toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              {/* Email */}
-              <div>
-                <label className="flex items-center gap-2 text-stone-light text-sm mb-2">
-                  <Mail size={14} />
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full px-4 py-3 bg-obsidian-light rounded-xl border border-white/10 text-white placeholder-white/30 focus:border-platinum focus:outline-none transition-colors"
-                  placeholder="john@example.com"
-                />
+              <div className="space-y-4 pt-6 border-t border-white/10 font-medium">
+                <div className="flex justify-between">
+                  <span>Subtotal</span>
+                  <span className="text-white">${getSubtotal().toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Shipping</span>
+                  <span className="text-emerald-400">FREE</span>
+                </div>
+                <div className="flex justify-between text-2xl font-display font-bold pt-4 border-t border-white/5">
+                  <span className="text-white">Total</span>
+                  <span className="text-platinum">${getSubtotal().toFixed(2)}</span>
+                </div>
               </div>
-
-              {/* Phone */}
-              <div>
-                <label className="flex items-center gap-2 text-stone-light text-sm mb-2">
-                  <Phone size={14} />
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  required
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
-                  className="w-full px-4 py-3 bg-obsidian-light rounded-xl border border-white/10 text-white placeholder-white/30 focus:border-platinum focus:outline-none transition-colors"
-                  placeholder="(555) 123-4567"
-                />
-              </div>
-
-              {/* Address */}
-              <div>
-                <label className="flex items-center gap-2 text-stone-light text-sm mb-2">
-                  <MapPin size={14} />
-                  Shipping Address
-                </label>
-                <textarea
-                  name="address"
-                  required
-                  rows={3}
-                  value={formData.address}
-                  onChange={(e) =>
-                    setFormData({ ...formData, address: e.target.value })
-                  }
-                  className="w-full px-4 py-3 bg-obsidian-light rounded-xl border border-white/10 text-white placeholder-white/30 focus:border-platinum focus:outline-none transition-colors resize-none"
-                  placeholder="123 Main St, City, State 12345"
-                />
-              </div>
-
-              {/* Submit */}
-              <button
-                type="submit"
-                className="w-full py-4 bg-platinum text-obsidian font-bold rounded-full hover:bg-white transition-all uppercase tracking-widest text-sm shadow-[0_0_30px_rgba(228,228,231,0.3)] hover:shadow-[0_0_40px_rgba(228,228,231,0.4)]"
-              >
-                Place Order
-              </button>
-
-              <p className="text-center text-white/40 text-sm">
-                You'll receive an email confirmation and we'll reach out to finalize payment.
-              </p>
-            </form>
+            </div>
           </motion.div>
         </div>
       </div>

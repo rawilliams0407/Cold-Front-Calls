@@ -1,347 +1,251 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Wind, Camera } from "lucide-react";
-import { ProductCard, ProductCardSkeleton } from "@/ProductCard";
-import { MasonryGrid } from "@/MasonryGrid";
-import { useCartStore } from "@/stores/cartStore";
-import { useNavigate, Link } from "react-router-dom";
+import { ArrowRight, Waves, Wind, Shield, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ProductCard } from "../ProductCard";
+import { MasonryGrid } from "../MasonryGrid";
+import { useCartStore } from "../stores/cartStore";
+import { SEO } from "../components/SEO";
 
-import heroImages from "@/src/data/hero-images.json";
-import productsData from "@/src/data/products.json";
-import { Product } from "@/src/types/product";
-
-const HERO_IMAGES = heroImages;
-const PRODUCTS = productsData as Product[];
-
-const GALLERY_IMAGES = [
-    "https://images.unsplash.com/photo-1558550275-6e06c1df7203?q=80&w=800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1615255675841-83025219e83b?q=80&w=800&auto=format&fit=crop",
-    "/hero-slideshow/03.jpg",
-    "https://images.unsplash.com/photo-1627443689254-4f934f5aa0d8?q=80&w=800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1598948485421-26c7d242944a?q=80&w=800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1498579809087-ef1e558fd1da?q=80&w=800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1620023030368-b7c4d57c2a26?q=80&w=800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1505231649931-e405a7695393?q=80&w=800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1597845110517-575003e67f2b?q=80&w=800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1457139621581-298d19263887?q=80&w=800&auto=format&fit=crop",
+// Hero Slideshow Data
+const HERO_SLIDES = [
+    {
+        image: "/hero-slideshow/01.jpg",
+        headline: "Engineered for The Front",
+        sub: "When the weather moves in, our calls stand out."
+    },
+    {
+        image: "/hero-slideshow/02.jpg",
+        headline: "Hand-Turned Performance",
+        sub: "Every call is a unique masterpiece, tuned for the hunt."
+    },
+    {
+        image: "/hero-slideshow/03.jpg",
+        headline: "Built for The Hunt",
+        sub: "Reliability in the toughest conditions. Period."
+    }
 ];
 
-export const Home: React.FC = () => {
-    const navigate = useNavigate();
+export const Home = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
-    const [lineupFilter, setLineupFilter] = useState('All');
+    const addItem = useCartStore((state) => state.addItem);
 
-    const { addItem } = useCartStore();
-
+    // Auto-advance slideshow
     useEffect(() => {
-        const loadTimer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-
         const timer = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
+            setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
         }, 8000);
-
-        return () => {
-            clearInterval(timer);
-            clearTimeout(loadTimer);
-        }
+        return () => clearInterval(timer);
     }, []);
 
-    const handleAddToCart = (product: Product) => {
-        addItem({
-            id: product.id,
-            name: product.title,
-            price: product.price,
-            image: product.imageUrl,
-            category: product.category,
-        });
-    };
+    const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+
+    const categories = [
+        { name: "Goose Calls", icon: <Waves />, path: "/shop?category=goose", desc: "Crisp, powerful, and authentic tones." },
+        { name: "Duck Calls", icon: <Wind />, path: "/shop?category=duck", desc: "From feeding chuckles to long-range quacks." },
+        { name: "Accessories", icon: <Shield />, path: "/shop?category=accessories", desc: "Lanyards, cases, and gear for the field." }
+    ];
 
     return (
-        <>
-            {/* HERO SECTION - Ken Burns & Editorial Layout */}
-            <main className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-                {/* Background Slideshow with Ken Burns */}
-                <div className="absolute inset-0 z-0">
-                    <div className="absolute inset-0 bg-gradient-to-b from-obsidian/50 via-obsidian/20 to-obsidian z-20 pointer-events-none" />
-
-                    <AnimatePresence mode="popLayout">
-                        <motion.img
-                            key={currentSlide}
-                            src={HERO_IMAGES[currentSlide]}
-                            initial={{ opacity: 0, scale: 1.1 }}
-                            animate={{ opacity: 0.6, scale: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 2.5, ease: "easeInOut" }}
-                            className="absolute inset-0 w-full h-full object-cover z-10 animate-ken-burns will-change-transform"
-                            alt="Hunting Background"
-                        />
-                    </AnimatePresence>
-                </div>
-
-                {/* Hero Text */}
-                <div className="relative z-30 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
+        <div className="bg-obsidian min-h-screen">
+            <SEO 
+                title="Home" 
+                description="Cold Front Calls - Handcrafted premium custom duck and goose calls engineered for performance and reliability in the field."
+            />
+            
+            {/* HERO SECTION - SLIDESHOW */}
+            <section className="relative h-screen w-full overflow-hidden bg-obsidian">
+                <AnimatePresence mode="wait">
                     <motion.div
-                        initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                        transition={{ duration: 1.2, delay: 0.2 }}
-                        className="liquid-glass px-12 py-16 rounded-2xl border-white/5 backdrop-blur-2xl"
+                        key={currentSlide}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                        className="absolute inset-0"
                     >
-                        {/* Tagline */}
-                        <div className="flex items-center justify-center gap-4 mb-6">
-                            <div className="h-[1px] w-12 bg-platinum/50"></div>
-                            <h2 className="tracking-[0.2em] uppercase text-sm font-bold font-body text-ice-500">
-                                Hunt the Front
-                            </h2>
-                            <div className="h-[1px] w-12 bg-platinum/50"></div>
-                        </div>
+                        <div 
+                            className="absolute inset-0 bg-cover bg-center animate-ken-burns opacity-60"
+                            style={{ backgroundImage: `url(${HERO_SLIDES[currentSlide].image})` }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent" />
+                    </motion.div>
+                </AnimatePresence>
 
-                        {/* Headline */}
-                        <h1 className="text-6xl md:text-8xl font-display font-bold mb-6 leading-tight tracking-tight">
-                            <span className="radar-text">Cold Front Calls</span>
+                {/* Hero Content */}
+                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
+                    <motion.div
+                        key={`content-${currentSlide}`}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, delay: 0.5 }}
+                        className="max-w-5xl"
+                    >
+                        <span className="text-stone-light uppercase tracking-[0.4em] text-sm font-bold mb-6 block radar-text">
+                            Cold Front Moving In
+                        </span>
+                        <h1 className="text-7xl md:text-9xl font-display font-medium text-white leading-tight mb-8">
+                            {HERO_SLIDES[currentSlide].headline.split(' ').map((word, i) => (
+                                <span key={i} className={i === 2 ? "text-platinum font-bold" : ""}>{word} </span>
+                            ))}
                         </h1>
-
-                        {/* Description */}
-                        <p className="text-platinum-light max-w-2xl mx-auto mb-10 text-xl font-light leading-relaxed">
-                            Engineered from my lathe to your lanyard for the waterfowlers that want a call made how you want it, not off the shelf that gives you award-winning sound quality and runnability with no shortcuts.
+                        <p className="text-xl md:text-2xl text-stone-light font-body max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                            {HERO_SLIDES[currentSlide].sub}
                         </p>
-
-                        {/* CTA - Platinum Shimmer */}
-                        <div className="relative inline-flex group cursor-pointer">
-                            <Link to="/shop">
-                                <button
-                                    className="relative overflow-hidden inline-flex items-center justify-center px-10 py-4 text-base font-bold text-obsidian bg-platinum transition-all duration-500 rounded-full font-body uppercase tracking-widest hover:scale-[1.03] hover:bg-white shadow-[0_0_20px_rgba(228,228,231,0.3)]"
-                                >
-                                    <span className="relative z-10 flex items-center gap-2">
-                                        Shop Collection
-                                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                                    </span>
-                                    {/* Shimmer Effect */}
-                                    <div className="absolute inset-0 translate-x-[-100%] group-hover:animate-shimmer bg-gradient-to-r from-transparent via-white/50 to-transparent z-0" />
-                                </button>
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+                            <Link 
+                                to="/shop" 
+                                className="group px-12 py-5 bg-white text-obsidian font-bold text-sm uppercase tracking-[0.2em] rounded-full hover:bg-white transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 flex items-center gap-3"
+                            >
+                                Shop the Front
+                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                            <Link 
+                                to="/about" 
+                                className="px-12 py-5 border border-white/20 text-white font-bold text-sm uppercase tracking-[0.2em] rounded-full hover:bg-white/10 transition-all backdrop-blur-sm"
+                            >
+                                Our Story
                             </Link>
                         </div>
                     </motion.div>
                 </div>
-            </main>
 
-            {/* CATEGORY BREAKOUT - Bento / Cards */}
-            <section className="max-w-7xl mx-auto px-6 py-24 -mt-32 relative z-30">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Duck Category */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        onClick={() => navigate('/shop?category=Duck')}
-                        className="category-card group relative h-[500px] rounded-[2rem] overflow-hidden cursor-pointer shadow-2xl border border-ice-500/20 hover:border-frost-500 transition-all duration-500"
-                    >
-                        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent z-10 opacity-90 transition-opacity group-hover:opacity-70" />
-                        <img
-                            src="/categories/series-01-duck.png"
-                            className="w-full h-full object-cover transition-transform duration-[1.5s] ease-in-out group-hover:scale-110"
-                            alt="Duck Calls"
-                        />
-                        <div className="absolute bottom-10 left-8 z-20 transform transition-transform duration-500 group-hover:-translate-y-2">
-                            <h3 className="text-5xl font-display text-white">Duck</h3>
-                            <div className="h-[1px] w-12 bg-white/30 mt-4 group-hover:w-full transition-all duration-700" />
-                        </div>
-                    </motion.div>
-
-                    {/* Goose Category */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.1 }}
-                        onClick={() => navigate('/shop?category=Goose')}
-                        className="category-card group relative h-[500px] rounded-[2rem] overflow-hidden cursor-pointer shadow-2xl border border-ice-500/20 hover:border-frost-500 transition-all duration-500 md:-mt-12"
-                    >
-                        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent z-10 opacity-90 transition-opacity group-hover:opacity-70" />
-                        <img
-                            src="/categories/series-02-goose.png"
-                            className="w-full h-full object-cover transition-transform duration-[1.5s] ease-in-out group-hover:scale-110"
-                            alt="Goose Calls"
-                        />
-                        <div className="absolute bottom-10 left-8 z-20 transform transition-transform duration-500 group-hover:-translate-y-2">
-                            <h3 className="text-5xl font-display text-white">Goose</h3>
-                            <div className="h-[1px] w-12 bg-white/30 mt-4 group-hover:w-full transition-all duration-700" />
-                        </div>
-                    </motion.div>
-
-                    {/* Sub-Gauge Category */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        onClick={() => navigate('/shop?category=Sub-Gauge')}
-                        className="category-card group relative h-[500px] rounded-[2rem] overflow-hidden cursor-pointer shadow-2xl border border-ice-500/20 hover:border-frost-500 transition-all duration-500"
-                    >
-                        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent z-10 opacity-90 transition-opacity group-hover:opacity-70" />
-                        <img
-                            src="/categories/sub-gauge.png"
-                            className="w-full h-full object-cover transition-transform duration-[1.5s] ease-in-out group-hover:scale-110"
-                            alt="Sub-Gauge"
-                        />
-                        <div className="absolute bottom-10 left-8 z-20 transform transition-transform duration-500 group-hover:-translate-y-2">
-                            <h3 className="text-5xl font-display text-white">Sub-Gauge</h3>
-                            <div className="h-[1px] w-12 bg-white/30 mt-4 group-hover:w-full transition-all duration-700" />
-                        </div>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* HIGHLIGHTED PRODUCT - Editorial Style */}
-            <section className="max-w-7xl mx-auto px-6 py-24">
-                <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-                    {/* Image Side */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
-                        className="w-full lg:w-1/2"
-                    >
-                        <div className="relative rounded-[2rem] overflow-hidden aspect-[4/5] box-border border border-white/5 shadow-2xl group">
-                            <img
-                                src="/products/saweet-16-enhanced.png"
-                                alt="Saweet 16"
-                                className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-all duration-700"
+                {/* Slideshow Controls */}
+                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex items-center gap-8">
+                    <button onClick={prevSlide} className="p-3 text-white/50 hover:text-white transition-colors">
+                        <ChevronLeft size={24} />
+                    </button>
+                    <div className="flex gap-3">
+                        {HERO_SLIDES.map((_, i) => (
+                            <button 
+                                key={i}
+                                onClick={() => setCurrentSlide(i)}
+                                className={`h-1.5 transition-all duration-500 rounded-full ${currentSlide === i ? 'w-12 bg-platinum' : 'w-2 bg-white/20'}`}
                             />
-                            {/* Floating Badge */}
-                            <div className="absolute top-8 left-8 bg-platinum text-obsidian px-5 py-2 rounded-full font-bold shadow-lg uppercase text-xs tracking-widest backdrop-blur-md">
-                                Best Seller
-                            </div>
-
-                            {/* Inner Border/Frame Effect */}
-                            <div className="absolute inset-4 border border-white/20 rounded-3xl pointer-events-none opacity-50" />
-                        </div>
-                    </motion.div>
-
-                    {/* Content Side */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
-                        className="w-full lg:w-1/2 text-left"
-                    >
-                        <div className="flex items-center gap-3 mb-6">
-                            <Wind size={18} className="text-platinum" />
-                            <span className="text-platinum font-bold uppercase tracking-[0.2em] text-xs">Sub-Gauge</span>
-                        </div>
-
-                        <h2 className="text-6xl md:text-7xl font-display text-white mb-8 leading-none">
-                            <span className="radar-text">Saweet 16</span>
-                        </h2>
-
-                        <p className="text-stone-light text-lg leading-relaxed mb-10 font-light border-l border-white/10 pl-6">
-                            Smaller, lighter, and faster, just like your sub-gauge shotgun.
-                            When you need to get on the birds in a hurry with speed and quickness but still have all the power you could ever need.
-                        </p>
-
-                        <div className="flex flex-col sm:flex-row gap-6">
-                            <button
-                                onClick={() => navigate('/shop?category=Sub-Gauge')}
-                                className="px-12 py-4 bg-platinum text-obsidian font-bold text-sm rounded-full shadow-[0_0_20px_rgba(228,228,231,0.2)] transition-all hover:bg-white uppercase tracking-widest flex items-center justify-center gap-3 group hover:-translate-y-1"
-                            >
-                                Shop Now
-                                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                            </button>
-                            <button className="px-12 py-4 border border-white/20 hover:bg-white/5 text-white font-bold text-sm rounded-full transition-all uppercase tracking-widest flex items-center justify-center gap-2 hover:-translate-y-1">
-                                <span className="w-2 h-2 rounded-full bg-ice-400 animate-pulse" />
-                                Listen Demo
-                            </button>
-                        </div>
-                    </motion.div>
+                        ))}
+                    </div>
+                    <button onClick={nextSlide} className="p-3 text-white/50 hover:text-white transition-colors">
+                        <ChevronRight size={24} />
+                    </button>
                 </div>
             </section>
 
-            {/* THE LINEUP GRID */}
-            <section id="lineup" className="relative z-10 max-w-7xl mx-auto px-6 py-32 border-t border-white/5">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-10">
-                    <div>
-                        <h2 className="text-5xl md:text-6xl font-display text-white mb-4">The Lineup</h2>
-                        <p className="text-stone-light text-lg font-light">Precision instruments for every scenario.</p>
-                    </div>
-
-                    {/* Pill Filters - Clean & Minimal */}
-                    <div className="bg-white/5 p-1 rounded-full flex gap-1 backdrop-blur-md border border-white/5">
-                        {['All', 'Duck', 'Goose', 'Sub-Gauge'].map((filter) => (
-                            <button
-                                key={filter}
-                                onClick={() => setLineupFilter(filter)}
-                                className={`px-8 py-3 text-sm font-semibold rounded-full transition-all duration-300 ${lineupFilter === filter
-                                    ? 'bg-platinum text-obsidian shadow-lg'
-                                    : 'text-stone-light hover:text-white hover:bg-white/5'
-                                    }`}
+            {/* CATEGORIES GRID */}
+            <section className="py-32 px-6">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {categories.map((cat, i) => (
+                            <Link 
+                                key={i} 
+                                to={cat.path}
+                                className="category-card p-10 rounded-3xl group"
                             >
-                                {filter === 'Sub-Gauge' ? 'Sub' : filter}
-                            </button>
+                                <div className="relative z-10">
+                                    <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-8 group-hover:bg-platinum group-hover:text-obsidian transition-colors duration-500 text-platinum">
+                                        {React.cloneElement(cat.icon as React.ReactElement, { size: 28 })}
+                                    </div>
+                                    <h3 className="text-3xl font-display font-medium text-white mb-4">{cat.name}</h3>
+                                    <p className="text-stone-light text-lg mb-6 leading-relaxed">{cat.desc}</p>
+                                    <span className="inline-flex items-center gap-3 text-platinum font-bold uppercase tracking-widest text-xs group-hover:gap-5 transition-all">
+                                        Explorate
+                                        <ArrowRight size={16} />
+                                    </span>
+                                </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {isLoading ? (
-                        Array.from({ length: 4 }).map((_, i) => (
-                            <ProductCardSkeleton key={i} />
-                        ))
-                    ) : (
-                        PRODUCTS
-                            .filter(product => lineupFilter === 'All' || product.category.includes(lineupFilter))
-                            .map((product) => (
-                                <ProductCard
-                                    key={product.id}
-                                    id={product.id}
-                                    title={product.title}
-                                    price={product.price}
-                                    category={product.category}
-                                    imageUrl={product.imageUrl}
-                                    audioUrl={product.audioUrl}
-                                    onAddToCart={() => handleAddToCart(product)}
-                                />
-                            ))
-                    )}
-                </div>
             </section>
 
-            {/* BRAGGING RIGHTS - MASONRY GRID */}
-            <section className="relative z-10 max-w-7xl mx-auto px-6 py-24 mb-24">
-                <div className="flex flex-col items-center text-center mb-16">
-                    <span className="text-platinum font-bold uppercase tracking-[0.2em] text-xs mb-4">Community</span>
-                    <h2 className="text-5xl md:text-6xl font-display text-white mb-6">Field Reports</h2>
-                    <p className="text-stone-light max-w-2xl font-light">
-                        Join the #ColdFrontFamily and share your harvest.
-                    </p>
-                </div>
-
-                <MasonryGrid className="columns-1 sm:columns-2 lg:columns-3 gap-8" gap={8}>
-                    {GALLERY_IMAGES.map((img, i) => (
-                        <div key={i} className="relative group rounded-2xl overflow-hidden mb-8 border border-white/5 shadow-2xl">
-                            <div className="absolute inset-0 z-20 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                            <img
-                                src={img}
-                                alt={`Gallery Image ${i + 1}`}
-                                loading="lazy"
-                                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
-
-                            {/* Instagram Icon Overlay */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-50 group-hover:scale-100">
-                                <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30">
-                                    <Camera size={20} />
+            {/* HIGHLIGHTED PRODUCT */}
+            <section className="py-32 px-6 bg-obsidian-light/30">
+                <div className="max-w-7xl mx-auto">
+                    <div className="flex flex-col md:flex-row items-center gap-20">
+                        <div className="w-full md:w-1/2">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                className="relative aspect-square rounded-full border border-white/5 p-8"
+                            >
+                                <div className="absolute inset-0 animate-slow-morph bg-platinum/5 blur-3xl" />
+                                <img 
+                                    src="/products/saweet-16-enhanced.png" 
+                                    alt="Saweet 16 Duck Call" 
+                                    className="relative z-10 w-full h-full object-contain filter drop-shadow-[0_0_50px_rgba(255,255,255,0.1)]"
+                                />
+                            </motion.div>
+                        </div>
+                        <div className="w-full md:w-1/2">
+                            <span className="text-emerald-500 font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Best Seller</span>
+                            <h2 className="text-6xl md:text-7xl font-display font-medium text-white mb-8">The <span className="text-platinum italic">Saweet 16</span></h2>
+                            <p className="text-xl text-stone-light leading-relaxed mb-10">
+                                The most versatile duck call on your lanyard. Engineered with a unique tone channel that provides a raspy low-end for feeding chuckles, while maintaining enough volume to break the wind.
+                            </p>
+                            <div className="flex items-center gap-10 mb-10 border-y border-white/5 py-8">
+                                <div>
+                                    <p className="text-stone-light text-xs uppercase tracking-widest mb-1">Material</p>
+                                    <p className="text-white font-medium">Clear Acrylic</p>
+                                </div>
+                                <div>
+                                    <p className="text-stone-light text-xs uppercase tracking-widest mb-1">Reed</p>
+                                    <p className="text-white font-medium">Double-Reed</p>
+                                </div>
+                                <div>
+                                    <p className="text-stone-light text-xs uppercase tracking-widest mb-1">Sound Profile</p>
+                                    <p className="text-white font-medium">Deep / Raspy</p>
                                 </div>
                             </div>
+                            <button 
+                                onClick={() => addItem({
+                                    id: 1,
+                                    name: "Saweet 16",
+                                    price: 129.99,
+                                    image: "/products/saweet-16-enhanced.png",
+                                    category: "Duck"
+                                })}
+                                className="px-12 py-5 bg-platinum text-obsidian font-bold rounded-full hover:bg-white transition-all shadow-xl uppercase tracking-widest text-sm"
+                            >
+                                Add to Lanyard — $129.99
+                            </button>
                         </div>
-                    ))}
-                </MasonryGrid>
+                    </div>
+                </div>
             </section>
-        </>
+
+            {/* MASONRY GALLERY */}
+            <section className="py-40 px-6 overflow-hidden">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-24">
+                        <h2 className="text-5xl md:text-7xl font-display font-bold text-white mb-6">Built for the <span className="text-platinum">Wild</span></h2>
+                        <p className="text-stone-light text-xl max-w-2xl mx-auto">Our calls in their natural environment. Every photo from a hunt where a Cold Front moved in.</p>
+                    </div>
+                    
+                    <MasonryGrid columns={4} gap={6} className="md:columns-1 lg:columns-3 xl:columns-4">
+                        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                            <div key={i} className="rounded-2xl overflow-hidden border border-white/5 group bg-obsidian-light">
+                                <img 
+                                    src={`/gallery/hunt-0${i}.jpg`} 
+                                    alt="Duck hunt action" 
+                                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                                />
+                            </div>
+                        ))}
+                    </MasonryGrid>
+                </div>
+            </section>
+
+            {/* FINAL CTA */}
+            <section className="py-40 relative">
+                <div className="absolute inset-0 bg-platinum/5 mix-blend-overlay" />
+                <div className="relative z-10 text-center px-6">
+                    <h2 className="text-7xl md:text-9xl font-display font-bold text-white mb-12">Join the Front</h2>
+                    <Link to="/shop" className="inline-flex items-center gap-6 text-2xl md:text-4xl font-display text-platinum hover:text-white transition-colors group">
+                        Browse the Full Collection
+                        <ArrowRight size={48} className="group-hover:translate-x-4 transition-transform duration-500" />
+                    </Link>
+                </div>
+            </section>
+        </div>
     );
 };
