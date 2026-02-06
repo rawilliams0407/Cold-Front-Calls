@@ -15,6 +15,24 @@ export default defineType({
       initialValue: 'Cold Front Calls',
     }),
     defineField({
+      name: 'heroHeadline',
+      title: 'Hero Headline',
+      type: 'string',
+      initialValue: 'Cold Front Calls',
+    }),
+    defineField({
+      name: 'heroTagline',
+      title: 'Hero Tagline',
+      type: 'string',
+      initialValue: 'Hunt the Front',
+    }),
+    defineField({
+      name: 'heroDescription',
+      title: 'Hero Description',
+      type: 'text',
+      initialValue: 'Engineered from my lathe to your lanyard...',
+    }),
+    defineField({
       name: 'upsellDuckCall',
       title: 'Upsell Duck Call',
       description: 'The Duck Call product shown when customer has Goose but no Duck in cart',

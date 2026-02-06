@@ -10,6 +10,7 @@ interface ProductCardProps {
   imageUrl: string;
   audioUrl?: string;
   onAddToCart?: () => void;
+  fieldPath?: string;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -20,6 +21,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   imageUrl,
   audioUrl,
   onAddToCart,
+  fieldPath,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -91,10 +93,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       }}
       transition={{ duration: 0.3, ease: "easeOut" }}
       className="product-card-hover group relative w-full h-[550px] rounded-2xl bg-obsidian-light border border-ice-500/20 overflow-hidden cursor-pointer flex flex-col"
+      data-sb-object-id={fieldPath}
     >
       {/* Category Tag */}
       <div className="absolute top-4 left-4 z-20 pointer-events-none">
-        <span className="px-4 py-1.5 text-xs font-bold tracking-[0.2em] text-obsidian bg-platinum uppercase rounded-full font-body shadow-lg">
+        <span
+          className="px-4 py-1.5 text-xs font-bold tracking-[0.2em] text-obsidian bg-platinum uppercase rounded-full font-body shadow-lg"
+          data-sb-field-path=".category"
+        >
           {category}
         </span>
       </div>
@@ -105,6 +111,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           src={imageUrl}
           alt={`Cold Front Calls - ${title} ${category} Call`}
           className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-80"
+          data-sb-field-path=".image"
         />
 
         {/* Subtle Background Overlay for Depth */}
@@ -158,7 +165,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="p-6 flex flex-col justify-between flex-grow relative bg-obsidian-light border-t border-white/5">
 
         <div>
-          <h3 className="text-3xl font-display font-medium text-white tracking-tight leading-none group-hover:text-platinum transition-colors">
+          <h3
+            className="text-3xl font-display font-medium text-white tracking-tight leading-none group-hover:text-platinum transition-colors"
+            data-sb-field-path=".title"
+          >
             {title}
           </h3>
           <p className="text-stone-light font-body text-xs mt-3 uppercase tracking-widest opacity-80">
@@ -171,7 +181,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
             <span className="text-xs text-stone-light font-body uppercase tracking-wider">In Stock</span>
           </div>
-          <span className="text-xl font-bold text-platinum font-body tracking-wide">
+          <span
+            className="text-xl font-bold text-platinum font-body tracking-wide"
+            data-sb-field-path=".price"
+          >
             ${price.toFixed(2)}
           </span>
         </div>

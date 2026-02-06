@@ -10,9 +10,10 @@ import heroImages from "@/src/data/hero-images.json";
 import productsData from "@/src/data/products.json";
 import { Product } from "@/src/types/product";
 import { SEO } from "@/components/SEO";
+import { client, urlFor } from "@/src/lib/sanity";
 
 const HERO_IMAGES = heroImages;
-const PRODUCTS = productsData as Product[];
+const LOCAL_PRODUCTS = productsData as Product[];
 
 const GALLERY_IMAGES = [
     "https://images.unsplash.com/photo-1558550275-6e06c1df7203?q=80&w=800&auto=format&fit=crop",
@@ -35,6 +36,8 @@ export const Home: React.FC = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [lineupFilter, setLineupFilter] = useState('All');
+    const [products, setProducts] = useState<Product[]>(LOCAL_PRODUCTS);
+    const [settings, setSettings] = useState<any>(null);
 
     const { addItem } = useCartStore();
 
@@ -47,15 +50,43 @@ export const Home: React.FC = () => {
             setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
         }, 8000);
 
+        // Fetch from Sanity
+        const fetchData = async () => {
+            try {
+                const [sanityProducts, sanitySettings] = await Promise.all([
+                    client.fetch(`*[_type == "product"] { 
+                        "id": _id, 
+                        title, 
+                        price, 
+                        category, 
+                        "imageUrl": image.asset->url,
+                        "audioUrl": audioFile.asset->url
+                    }`),
+                    client.fetch(`*[_type == "siteSettings"][0]`)
+                ]);
+
+                if (sanityProducts && sanityProducts.length > 0) {
+                    setProducts(sanityProducts);
+                }
+                if (sanitySettings) {
+                    setSettings(sanitySettings);
+                }
+            } catch (err) {
+                console.error("Sanity fetch error:", err);
+            }
+        };
+
+        fetchData();
+
         return () => {
             clearInterval(timer);
             clearTimeout(loadTimer);
         }
     }, []);
 
-    const handleAddToCart = (product: typeof PRODUCTS[number]) => {
+    const handleAddToCart = (product: any) => {
         addItem({
-            id: product.id,
+            id: Number(product.id),
             name: product.title,
             price: product.price,
             image: product.imageUrl,
@@ -98,24 +129,33 @@ export const Home: React.FC = () => {
                         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         transition={{ duration: 1.2, delay: 0.2 }}
                         className="liquid-glass px-12 py-16 rounded-2xl border-white/5 backdrop-blur-2xl"
+                        data-sb-object-id={settings?._id}
                     >
                         {/* Tagline */}
                         <div className="flex items-center justify-center gap-4 mb-6">
                             <div className="h-[1px] w-12 bg-platinum/50"></div>
-                            <h2 className="tracking-[0.2em] uppercase text-sm font-bold font-body text-ice-500">
-                                Hunt the Front
+                            <h2
+                                className="tracking-[0.2em] uppercase text-sm font-bold font-body text-ice-500"
+                                data-sb-field-path=".heroTagline"
+                            >
+                                {settings?.heroTagline || "Hunt the Front"}
                             </h2>
                             <div className="h-[1px] w-12 bg-platinum/50"></div>
                         </div>
 
                         {/* Headline */}
                         <h1 className="text-6xl md:text-8xl font-display font-bold mb-6 leading-tight tracking-tight">
-                            <span className="radar-text">Cold Front Calls</span>
+                            <span className="radar-text" data-sb-field-path=".heroHeadline">
+                                {settings?.heroHeadline || "Cold Front Calls"}
+                            </span>
                         </h1>
 
                         {/* Description */}
-                        <p className="text-platinum-light max-w-2xl mx-auto mb-10 text-xl font-light leading-relaxed">
-                            Engineered from my lathe to your lanyard for the waterfowlers that want a call made how you want it, not off the shelf that gives you award-winning sound quality and runnability with no shortcuts.
+                        <p
+                            className="text-platinum-light max-w-2xl mx-auto mb-10 text-xl font-light leading-relaxed"
+                            data-sb-field-path=".heroDescription"
+                        >
+                            {settings?.heroDescription || "Engineered from my lathe to your lanyard for the waterfowlers that want a call made how you want it, not off the shelf that gives you award-winning sound quality and runnability with no shortcuts."}
                         </p>
 
                         {/* CTA - Platinum Shimmer */}
@@ -302,18 +342,19 @@ export const Home: React.FC = () => {
                             <ProductCardSkeleton key={i} />
                         ))
                     ) : (
-                        PRODUCTS
+                        products
                             .filter(product => lineupFilter === 'All' || product.category.includes(lineupFilter))
                             .map((product) => (
                                 <ProductCard
                                     key={product.id}
-                                    id={product.id}
+                                    id={Number(product.id)}
                                     title={product.title}
                                     price={product.price}
                                     category={product.category}
                                     imageUrl={product.imageUrl}
                                     audioUrl={product.audioUrl}
                                     onAddToCart={() => handleAddToCart(product)}
+                                    fieldPath={product.id.toString()}
                                 />
                             ))
                     )}
