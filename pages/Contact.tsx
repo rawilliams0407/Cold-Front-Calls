@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MessageCircle, Send, ChevronDown } from "lucide-react";
+import { Mail, Send, ChevronDown, Facebook, Phone } from "lucide-react";
 
 const FAQS = [
     {
@@ -9,232 +9,266 @@ const FAQS = [
     },
     {
         question: "Do you offer custom calls?",
-        answer: "Yes! We love creating custom pieces. Contact us with your vision and we'll work together to create something unique."
+        answer: "Yes! We love creating custom pieces. Reach out through the form with your ideas and we'll work with you to create something unique."
     },
     {
         question: "What's your return policy?",
-        answer: "We stand behind our products. If you're not completely satisfied within 30 days, we'll make it right with a full refund or exchange."
+        answer: "We offer a 30-day satisfaction guarantee. If you're not completely satisfied with your call, contact us for a return or exchange."
     },
     {
         question: "How do I care for my call?",
-        answer: "Keep your call dry and store it in a cool place. Wipe down with a soft cloth after use. Avoid extreme temperatures which can affect the reed."
-    },
-    {
-        question: "Do you ship internationally?",
-        answer: "Currently, we ship within the United States. International shipping is coming soon - sign up for our newsletter to be notified!"
+        answer: "Store your call in a dry place, clean with a soft cloth, and avoid extreme temperatures. Acrylic is durable but should be handled with care."
     }
 ];
 
 export const Contact = () => {
-    const [openFaq, setOpenFaq] = useState<number | null>(null);
-    const [formState, setFormState] = useState({
-        name: "",
-        email: "",
-        subject: "",
-        message: ""
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
     });
+    const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission
-        console.log("Form submitted:", formState);
+        setIsSubmitting(true);
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setIsSubmitted(true);
+            setFormData({ name: '', email: '', subject: '', message: '' });
+        }, 1500);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setFormData(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }));
     };
 
     return (
-        <div className="min-h-screen bg-obsidian">
+        <>
             {/* Hero Section */}
-            <section className="relative pt-32 pb-16">
-                <div className="max-w-7xl mx-auto px-6">
-                    <motion.h1 
-                        initial={{ opacity: 0, y: 20 }}
+            <section className="relative pt-32 pb-16 overflow-hidden">
+                <div className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-b from-obsidian via-obsidian/95 to-obsidian z-10" />
+                    <img
+                        src="https://images.unsplash.com/photo-1457139621581-298d19263887?q=80&w=2000&auto=format&fit=crop"
+                        className="w-full h-full object-cover opacity-30"
+                        alt="Contact Background"
+                    />
+                </div>
+
+                <div className="relative z-20 max-w-4xl mx-auto px-6 text-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-6xl font-display font-bold text-white text-center"
+                        transition={{ duration: 0.8 }}
                     >
-                        Get In Touch
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-stone-light text-lg text-center mt-4 max-w-2xl mx-auto"
-                    >
-                        Have a question or want to discuss a custom order? We'd love to hear from you.
-                    </motion.p>
+                        <h2 className="tracking-[0.3em] uppercase text-sm font-bold text-platinum mb-4">
+                            Get In Touch
+                        </h2>
+                        <h1 className="text-6xl md:text-7xl font-display font-bold text-white mb-6">
+                            Contact Us
+                        </h1>
+                        <p className="text-stone-light text-lg max-w-xl mx-auto font-light">
+                            Questions about our calls? Need help with an order?
+                            Or just want to share your latest hunt? We'd love to hear from you.
+                        </p>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Contact Form & Info */}
-            <section className="py-16">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid lg:grid-cols-2 gap-16">
-                        {/* Contact Form */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <div className="bg-obsidian-light rounded-3xl p-8 border border-white/5">
-                                <h2 className="text-2xl font-display font-bold text-white mb-6">
-                                    Send a Message
-                                </h2>
-                                <form onSubmit={handleSubmit} className="space-y-6">
-                                    <div className="grid md:grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-stone-light text-sm mb-2">Name</label>
-                                            <input
-                                                type="text"
-                                                value={formState.name}
-                                                onChange={(e) => setFormState({...formState, name: e.target.value})}
-                                                className="w-full px-4 py-3 bg-obsidian rounded-xl border border-white/10 text-white placeholder-stone-light focus:border-ice-500 focus:outline-none transition-colors"
-                                                placeholder="Your name"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-stone-light text-sm mb-2">Email</label>
-                                            <input
-                                                type="email"
-                                                value={formState.email}
-                                                onChange={(e) => setFormState({...formState, email: e.target.value})}
-                                                className="w-full px-4 py-3 bg-obsidian rounded-xl border border-white/10 text-white placeholder-stone-light focus:border-ice-500 focus:outline-none transition-colors"
-                                                placeholder="your@email.com"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-stone-light text-sm mb-2">Subject</label>
-                                        <select
-                                            value={formState.subject}
-                                            onChange={(e) => setFormState({...formState, subject: e.target.value})}
-                                            className="w-full px-4 py-3 bg-obsidian rounded-xl border border-white/10 text-white focus:border-ice-500 focus:outline-none transition-colors appearance-none cursor-pointer"
-                                        >
-                                            <option value="">Select a topic</option>
-                                            <option value="order">Order Question</option>
-                                            <option value="custom">Custom Order</option>
-                                            <option value="wholesale">Wholesale Inquiry</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-stone-light text-sm mb-2">Message</label>
-                                        <textarea
-                                            value={formState.message}
-                                            onChange={(e) => setFormState({...formState, message: e.target.value})}
-                                            rows={5}
-                                            className="w-full px-4 py-3 bg-obsidian rounded-xl border border-white/10 text-white placeholder-stone-light focus:border-ice-500 focus:outline-none transition-colors resize-none"
-                                            placeholder="Tell us what's on your mind..."
-                                        />
-                                    </div>
-
-                                    <button
-                                        type="submit"
-                                        className="w-full py-4 bg-platinum text-obsidian font-bold rounded-full hover:bg-white transition-all uppercase tracking-widest text-sm flex items-center justify-center gap-2 group"
-                                    >
-                                        <Send size={16} className="group-hover:translate-x-1 transition-transform" />
-                                        Send Message
-                                    </button>
-                                </form>
-                            </div>
-                        </motion.div>
-
-                        {/* Contact Info */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="space-y-8"
-                        >
-                            {/* Quick Contact */}
-                            <div className="bg-obsidian-light rounded-3xl p-8 border border-white/5">
-                                <h2 className="text-2xl font-display font-bold text-white mb-6">
-                                    Quick Contact
-                                </h2>
-                                <div className="space-y-4">
-                                    <a href="mailto:hello@coldfrontcalls.com" className="flex items-center gap-4 p-4 bg-obsidian rounded-xl border border-white/5 hover:border-ice-500/30 transition-colors group">
-                                        <div className="w-12 h-12 rounded-xl bg-ice-500/10 flex items-center justify-center group-hover:bg-ice-500/20 transition-colors">
-                                            <Mail className="w-5 h-5 text-ice-400" />
-                                        </div>
-                                        <div>
-                                            <div className="text-stone-light text-sm">Email</div>
-                                            <div className="text-white font-medium">hello@coldfrontcalls.com</div>
-                                        </div>
-                                    </a>
-                                    <a href="#" className="flex items-center gap-4 p-4 bg-obsidian rounded-xl border border-white/5 hover:border-ice-500/30 transition-colors group">
-                                        <div className="w-12 h-12 rounded-xl bg-ice-500/10 flex items-center justify-center group-hover:bg-ice-500/20 transition-colors">
-                                            <MessageCircle className="w-5 h-5 text-ice-400" />
-                                        </div>
-                                        <div>
-                                            <div className="text-stone-light text-sm">Social</div>
-                                            <div className="text-white font-medium">@coldfrontcalls</div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            {/* Response Time */}
-                            <div className="bg-gradient-to-br from-ice-500/10 to-transparent rounded-3xl p-8 border border-ice-500/20">
-                                <h3 className="text-xl font-display font-bold text-white mb-3">
-                                    Fast Response
-                                </h3>
-                                <p className="text-stone-light">
-                                    We typically respond within 24 hours during business days. For urgent matters, reach out via social media.
-                                </p>
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
-
-            {/* FAQ Section */}
-            <section className="py-20 border-t border-white/5">
-                <div className="max-w-3xl mx-auto px-6">
+            <section className="max-w-7xl mx-auto px-6 py-16">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="text-center mb-12"
+                        transition={{ duration: 0.8 }}
                     >
-                        <h2 className="text-4xl font-display font-bold text-white mb-4">
-                            Frequently Asked Questions
-                        </h2>
-                        <p className="text-stone-light">
-                            Quick answers to common questions
-                        </p>
-                    </motion.div>
+                        <h3 className="text-3xl font-display text-white mb-8">Send a Message</h3>
 
-                    <div className="space-y-4">
-                        {FAQS.map((faq, index) => (
+                        {isSubmitted ? (
                             <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.05 }}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="liquid-glass rounded-2xl p-12 text-center"
                             >
+                                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center">
+                                    <Send size={28} className="text-green-400" />
+                                </div>
+                                <h4 className="text-2xl font-display text-white mb-3">Message Sent!</h4>
+                                <p className="text-stone-light">
+                                    Thanks for reaching out. We'll get back to you within 24-48 hours.
+                                </p>
                                 <button
-                                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                                    className="w-full text-left bg-obsidian-light rounded-xl p-5 border border-white/5 hover:border-ice-500/30 transition-colors"
+                                    onClick={() => setIsSubmitted(false)}
+                                    className="mt-6 text-platinum hover:text-white transition-colors underline"
                                 >
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-white font-medium">{faq.question}</span>
-                                        <ChevronDown 
-                                            className={`w-5 h-5 text-stone-light transition-transform ${
-                                                openFaq === index ? 'rotate-180' : ''
-                                            }`} 
-                                        />
-                                    </div>
-                                    {openFaq === index && (
-                                        <p className="text-stone-light mt-4 pt-4 border-t border-white/5">
-                                            {faq.answer}
-                                        </p>
-                                    )}
+                                    Send another message
                                 </button>
                             </motion.div>
-                        ))}
-                    </div>
+                        ) : (
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-sm font-medium text-platinum mb-2">Name</label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-stone-light/50 focus:outline-none focus:border-platinum/50 transition-colors"
+                                            placeholder="Your name"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-platinum mb-2">Email</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-stone-light/50 focus:outline-none focus:border-platinum/50 transition-colors"
+                                            placeholder="your@email.com"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-platinum mb-2">Subject</label>
+                                    <select
+                                        name="subject"
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-platinum/50 transition-colors appearance-none cursor-pointer"
+                                    >
+                                        <option value="" className="bg-obsidian">Select a subject...</option>
+                                        <option value="order" className="bg-obsidian">Order Question</option>
+                                        <option value="product" className="bg-obsidian">Product Question</option>
+                                        <option value="custom" className="bg-obsidian">Custom Order</option>
+                                        <option value="other" className="bg-obsidian">Other</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-platinum mb-2">Message</label>
+                                    <textarea
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        required
+                                        rows={5}
+                                        className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-stone-light/50 focus:outline-none focus:border-platinum/50 transition-colors resize-none"
+                                        placeholder="Tell us what's on your mind..."
+                                    />
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="w-full px-10 py-4 bg-platinum text-obsidian font-bold text-sm rounded-full shadow-[0_0_20px_rgba(228,228,231,0.2)] transition-all hover:bg-white uppercase tracking-widest hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <div className="w-5 h-5 border-2 border-obsidian/30 border-t-obsidian rounded-full animate-spin" />
+                                            Sending...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Send Message
+                                        </>
+                                    )}
+                                </button>
+                            </form>
+                        )}
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, x: 40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        <div className="liquid-glass rounded-2xl p-8 mb-8">
+                            <h4 className="text-xl font-display text-white mb-6">Quick Contact</h4>
+                            <div className="space-y-4">
+                                <a href="mailto:thecoldfrontcalls@gmail.com" className="flex items-center gap-4 text-stone-light hover:text-white transition-colors group">
+                                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                                        <Mail size={20} className="text-platinum" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-platinum">Email</p>
+                                        <p className="font-medium">thecoldfrontcalls@gmail.com</p>
+                                    </div>
+                                </a>
+                                <a href="tel:2698303165" className="flex items-center gap-4 text-stone-light hover:text-white transition-colors group">
+                                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                                        <Phone size={20} className="text-platinum" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-platinum">Phone</p>
+                                        <p className="font-medium">(269) 830-3165</p>
+                                    </div>
+                                </a>
+                                <a href="https://www.facebook.com/profile.php?id=100063501552972" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-stone-light hover:text-white transition-colors group">
+                                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                                        <Facebook size={20} className="text-platinum" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-platinum">Facebook</p>
+                                        <p className="font-medium">Cold Front Calls</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 className="text-xl font-display text-white mb-6">Frequently Asked Questions</h4>
+                            <div className="space-y-3">
+                                {FAQS.map((faq, index) => (
+                                    <div
+                                        key={index}
+                                        className="border border-white/10 rounded-xl overflow-hidden"
+                                    >
+                                        <button
+                                            onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                                            className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
+                                        >
+                                            <span className="text-white font-medium">{faq.question}</span>
+                                            <ChevronDown
+                                                size={20}
+                                                className={`text-platinum transition-transform duration-300 ${expandedFaq === index ? 'rotate-180' : ''}`}
+                                            />
+                                        </button>
+                                        <motion.div
+                                            initial={false}
+                                            animate={{
+                                                height: expandedFaq === index ? 'auto' : 0,
+                                                opacity: expandedFaq === index ? 1 : 0
+                                            }}
+                                            transition={{ duration: 0.3 }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="px-6 pb-4 text-stone-light text-sm leading-relaxed">
+                                                {faq.answer}
+                                            </div>
+                                        </motion.div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
             </section>
-        </div>
+        </>
     );
 };
