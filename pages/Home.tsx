@@ -62,7 +62,10 @@ export const Home: React.FC = () => {
                         "imageUrl": image.asset->url,
                         "audioUrl": audioFile.asset->url
                     }`),
-                    client.fetch(`*[_type == "siteSettings"][0]`)
+                    client.fetch(`*[_type == "siteSettings"][0] {
+                        ...,
+                        "galleryUrls": gallery[].asset->url
+                    }`)
                 ]);
 
                 if (sanityProducts && sanityProducts.length > 0) {
@@ -371,9 +374,17 @@ export const Home: React.FC = () => {
                     </p>
                 </div>
 
-                <MasonryGrid className="columns-1 sm:columns-2 lg:columns-3 gap-8" gap={8}>
-                    {GALLERY_IMAGES.map((img, i) => (
-                        <div key={i} className="relative group rounded-2xl overflow-hidden mb-8 border border-white/5 shadow-2xl">
+                <MasonryGrid
+                    className="columns-1 sm:columns-2 lg:columns-3 gap-8"
+                    gap={8}
+                    data-sb-field-path=".gallery"
+                >
+                    {(settings?.galleryUrls || GALLERY_IMAGES).map((img: string, i: number) => (
+                        <div
+                            key={i}
+                            className="relative group rounded-2xl overflow-hidden mb-8 border border-white/5 shadow-2xl"
+                            data-sb-field-path={settings?.galleryUrls ? `.[${i}]` : undefined}
+                        >
                             <div className="absolute inset-0 z-20 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                             <img

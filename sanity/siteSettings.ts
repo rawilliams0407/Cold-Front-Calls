@@ -52,6 +52,15 @@ export default defineType({
         filter: 'category == "Goose"',
       },
     }),
+    defineField({
+      name: 'gallery',
+      title: 'Gallery Images',
+      type: 'array',
+      of: [{ type: 'image' }],
+      options: {
+        layout: 'grid',
+      },
+    }),
   ],
   preview: {
     prepare() {
