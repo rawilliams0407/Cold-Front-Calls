@@ -5,19 +5,19 @@ const SITE_NAME = "Cold Front Calls";
 const OWNER_NAME = "Randy";
 
 export default async (request, context) => {
-    // Parse the form submission data from Netlify
-    const body = await request.json();
-    const { payload } = body;
+  // Parse the form submission data from Netlify
+  const body = await request.json();
+  const { payload } = body;
 
-    // Extract customer data from form submission
-    const customerEmail = payload.data.email;
-    const customerName = payload.data.name;
-    const orderDetails = payload.data.order_details;
-    const phone = payload.data.phone;
-    const address = payload.data.address;
+  // Extract customer data from form submission
+  const customerEmail = payload.data.email;
+  const customerName = payload.data.name;
+  const orderDetails = payload.data.order_details;
+  const phone = payload.data.phone;
+  const address = payload.data.address;
 
-    // Generate order confirmation email HTML
-    const emailHtml = `
+  // Generate order confirmation email HTML
+  const emailHtml = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -143,8 +143,8 @@ export default async (request, context) => {
 </html>
   `.trim();
 
-    // Plain text version
-    const emailText = `
+  // Plain text version
+  const emailText = `
 Order Received - ${SITE_NAME}
 
 Hey ${customerName.split(' ')[0]},
@@ -171,47 +171,44 @@ Questions? Just reply to this email.
 © ${new Date().getFullYear()} ${SITE_NAME}
   `.trim();
 
-    try {
-        // Use Netlify's email integration or a third-party service
-        // Option 1: Use Resend (recommended - free tier available)
-        const RESEND_API_KEY = Netlify.env.get("RESEND_API_KEY");
-        const FROM_EMAIL = Netlify.env.get("FROM_EMAIL") || "orders@coldfrontcalls.com";
+  try {
+    // Use Netlify's email integration or a third-party service
+    // Option 1: Use Resend (recommended - free tier available)
+    const RESEND_API_KEY = Netlify.env.get("RESEND_API_KEY");
+    const FROM_EMAIL = Netlify.env.get("FROM_EMAIL") || "orders@coldfrontcalls.com";
 
-        if (RESEND_API_KEY) {
-            const response = await fetch("https://api.resend.com/emails", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${RESEND_API_KEY}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    from: `${SITE_NAME} <${FROM_EMAIL}>`,
-                    to: [customerEmail],
-                    subject: `Order Received - ${SITE_NAME}`,
-                    html: emailHtml,
-                    text: emailText,
-                }),
-            });
+    if (RESEND_API_KEY) {
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: `${SITE_NAME} <${FROM_EMAIL}>`,
+          to: [customerEmail],
+          subject: `Order Received - ${SITE_NAME}`,
+          html: emailHtml,
+          text: emailText,
+        }),
+      });
 
-            if (!response.ok) {
-                const error = await response.text();
-                console.error("Failed to send email:", error);
-                return new Response(JSON.stringify({ error: "Failed to send email" }), { status: 500 });
-            }
+      if (!response.ok) {
+        const error = await response.text();
+        console.error("Failed to send email:", error);
+        return new Response(JSON.stringify({ error: "Failed to send email" }), { status: 500 });
+      }
 
-            console.log(`Confirmation email sent to ${customerEmail}`);
-        } else {
-            console.warn("RESEND_API_KEY not configured - email not sent");
-        }
-
-        return new Response(JSON.stringify({ success: true }), { status: 200 });
-    } catch (error) {
-        console.error("Error sending confirmation email:", error);
-        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+      console.log(`Confirmation email sent to ${customerEmail}`);
+    } else {
+      console.warn("RESEND_API_KEY not configured - email not sent");
     }
+
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } catch (error) {
+    console.error("Error sending confirmation email:", error);
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  }
 };
 
-// Configure this function to trigger on form submissions
-export const config = {
-    path: "/.netlify/functions/submission-created",
-};
+// Configuration is not needed for event-triggered functions with custom paths
