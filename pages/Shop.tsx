@@ -8,8 +8,9 @@ import productsData from "../src/data/products.json";
 import { Product } from "../src/types/product";
 import { SEO } from "../components/SEO";
 import { StructuredData } from "../components/StructuredData";
+import { client } from "../src/lib/sanity";
 
-const PRODUCTS = productsData as Product[];
+const LOCAL_PRODUCTS = productsData as Product[];
 
 type FilterCategory = 'All' | 'Duck' | 'Goose' | 'Sub-Gauge';
 
@@ -17,6 +18,7 @@ export const Shop = () => {
     const [searchParams] = useSearchParams();
     const categoryParam = searchParams.get('category');
     const [activeFilter, setActiveFilter] = useState<FilterCategory>('All');
+    const [products, setProducts] = useState<Product[]>(LOCAL_PRODUCTS);
     const { addItem } = useCartStore();
 
     useEffect(() => {
@@ -27,15 +29,37 @@ export const Shop = () => {
                 setActiveFilter(formattedParam as FilterCategory);
             }
         }
+
+        // Fetch products from Sanity
+        const fetchProducts = async () => {
+            try {
+                const sanityProducts = await client.fetch(`*[_type == "product"] { 
+                    "id": _id, 
+                    title, 
+                    price, 
+                    category, 
+                    "imageUrl": image.asset->url,
+                    "audioUrl": audioFile.asset->url
+                }`);
+
+                if (sanityProducts && sanityProducts.length > 0) {
+                    setProducts(sanityProducts);
+                }
+            } catch (err) {
+                console.error("Sanity fetch error:", err);
+            }
+        };
+
+        fetchProducts();
     }, [categoryParam]);
 
     const filteredProducts = activeFilter === 'All'
-        ? PRODUCTS
-        : PRODUCTS.filter(p => p.category.includes(activeFilter));
+        ? products
+        : products.filter(p => p.category.includes(activeFilter));
 
-    const handleAddToCart = (product: typeof PRODUCTS[number]) => {
+    const handleAddToCart = (product: any) => {
         addItem({
-            id: product.id,
+            id: Number(product.id),
             name: product.title,
             price: product.price,
             image: product.imageUrl,
@@ -145,13 +169,14 @@ export const Shop = () => {
                             layout
                         >
                             <ProductCard
-                                id={product.id}
+                                id={Number(product.id)}
                                 title={product.title}
                                 price={product.price}
                                 category={product.category}
                                 imageUrl={product.imageUrl}
                                 audioUrl={product.audioUrl}
                                 onAddToCart={() => handleAddToCart(product)}
+                                fieldPath={product.id.toString()}
                             />
                         </motion.div>
                     ))}
