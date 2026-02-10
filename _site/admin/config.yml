@@ -1,0 +1,95 @@
+backend:
+  name: git-gateway
+  branch: main
+local_backend: true
+
+media_folder: "src/assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "products"
+    label: "Products"
+    folder: "src/products"
+    create: true
+    slug: "{{title}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Price", name: "price", widget: "number", value_type: "float" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { 
+          label: "Category", 
+          name: "category", 
+          widget: "select", 
+          multiple: true,
+          options: ["Duck", "Goose", "Sub-Gauge"] 
+        }
+      - { label: "Short Description (SEO)", name: "description", widget: "text", required: false }
+      - { label: "Species", name: "species", widget: "string", required: false }
+      - { label: "Material", name: "material", widget: "string", required: false }
+      - { label: "Style", name: "style", widget: "string", required: false }
+      - { label: "Description (Body)", name: "body", widget: "markdown" }
+      - { label: "Audio URL", name: "audioUrl", widget: "string", required: false }
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "gallery"
+        label: "Field Reports Gallery"
+        file: "src/_data/gallery.json"
+        fields:
+          - label: "Gallery Images"
+            name: "images"
+            widget: "list"
+            summary: "{{fields.alt}}"
+            fields:
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string" }
+      
+      - name: "global"
+        label: "Global Settings (SEO & Upsells)"
+        file: "src/_data/site.json"
+        fields:
+          - { label: "Site Title", name: "title", widget: "string" }
+          - { label: "Site Description", name: "description", widget: "text" }
+          - { label: "Site URL", name: "url", widget: "string" }
+          - label: "Upsell Configuration"
+            name: "upsells"
+            widget: "object"
+            fields:
+              - { label: "Enable Upsells", name: "enable", widget: "boolean", default: true }
+              - { 
+                  label: "Upsell Duck Call (Product Slug)", 
+                  name: "duckProduct", 
+                  widget: "relation", 
+                  collection: "products", 
+                  search_fields: ["title", "slug"], 
+                  value_field: "slug",
+                  display_fields: ["title"]
+                }
+              - { 
+                  label: "Upsell Goose Call (Product Slug)", 
+                  name: "gooseProduct", 
+                  widget: "relation", 
+                  collection: "products", 
+                  search_fields: ["title", "slug"], 
+                  value_field: "slug",
+                  display_fields: ["title"]
+                }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "about"
+        label: "About Page"
+        file: "src/about.njk"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Layout", name: "layout", widget: "hidden", default: "base" }
+
+      - name: "contact"
+        label: "Contact Page"
+        file: "src/contact.njk"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Layout", name: "layout", widget: "hidden", default: "base" }
+

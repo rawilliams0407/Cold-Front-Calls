@@ -7,9 +7,14 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "start": "run-p dev:*",
+    "dev:eleventy": "eleventy --serve",
+    "dev:tailwind": "npx @tailwindcss/cli -i src/assets/css/style.css -o _site/assets/css/style.css --watch",
+    "dev:cms": "npx netlify-cms-proxy-server",
+    "build": "run-s build:*",
+    "build:eleventy": "npx @11ty/eleventy --config=eleventy.config.cjs",
+    "build:tailwind": "npx @tailwindcss/cli -i src/assets/css/style.css -o _site/assets/css/style.css --minify",
+    "preview": "eleventy --serve",
     "update-slideshow": "node scripts/update-slideshow.js"
   },
   "dependencies": {
@@ -27,9 +32,15 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@tailwindcss/cli": "^4.1.18",
     "@tailwindcss/vite": "^4.1.18",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "luxon": "^3.7.2",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }

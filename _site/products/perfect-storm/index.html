@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfect Storm</title>
+  <meta name="description" content="Handcrafted goose call engineered for performance.">
+  <meta name="keywords" content="duck calls, goose calls, waterfowl, hunting, custom calls, waterfowl calls">
+  <meta name="theme-color" content="#0a1a2f">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://coldfrontcalls.com/products/perfect-storm/">
+  <meta property="og:title" content="Perfect Storm">
+  <meta property="og:description" content="Handcrafted goose call engineered for performance.">
+  <meta property="og:image" content="https://coldfrontcalls.com/assets/images/og-image.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Teko:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body class="bg-obsidian text-platinum min-h-screen font-body overflow-x-hidden">
+  <nav class="fixed w-full z-50 top-6 pointer-events-none">
+    <div id="nav-inner" class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between liquid-glass rounded-full pointer-events-auto transition-all duration-300 hover:bg-obsidian/40 mx-4 md:mx-auto">
+        <a href="/" class="flex items-center gap-3 min-w-0">
+            <div class="flex items-center gap-2 sm:gap-4 min-w-0">
+                <div class="w-9 h-9 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center">
+                    <svg viewBox="0 0 64 64" class="w-full h-full text-white fill-current" xmlns="http://www.w3.org/2000/svg" role="img">
+                        <title>Cold Front Calls Logo</title>
+                        <path d="M 20 10 Q 50 32 20 54" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
+                        <path d="M 30 18 L 42 24 L 33 30 Z" />
+                        <path d="M 35 26 L 47 32 L 38 38 Z" />
+                        <path d="M 30 34 L 42 40 L 33 46 Z" />
+                    </svg>
+                </div>
+                <span class="text-white whitespace-nowrap pt-1 truncate" style="font-family: 'Great Vibes', cursive; font-size: clamp(1.1rem, 4vw, 1.6rem);">
+                    Cold Front Calls
+                </span>
+            </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-10 font-medium text-lg tracking-wide text-platinum">
+            <a href="/shop" class="hover:text-white transition-colors relative group ">
+                Shop
+                <span class="absolute -bottom-1 left-0 h-[1px] bg-platinum transition-all w-0 group-hover:w-full"></span>
+            </a>
+            <a href="/about" class="hover:text-white transition-colors relative group ">
+                About
+                <span class="absolute -bottom-1 left-0 h-[1px] bg-platinum transition-all w-0 group-hover:w-full"></span>
+            </a>
+            <a href="/contact" class="hover:text-white transition-colors relative group ">
+                Contact
+                <span class="absolute -bottom-1 left-0 h-[1px] bg-platinum transition-all w-0 group-hover:w-full"></span>
+            </a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <a href="/checkout" id="cart-toggle" class="text-white hover:text-platinum-light transition-colors relative">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <div id="cart-count" class="hidden absolute -top-2 -right-2 w-5 h-5 bg-platinum text-obsidian rounded-full flex items-center justify-center text-xs font-bold">0</div>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="md:hidden text-white hover:text-platinum-light transition-colors p-1">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay (Hidden by default) -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-40 md:hidden pointer-events-auto">
+        <div class="absolute inset-0 bg-obsidian/80 backdrop-blur-md" id="mobile-menu-close"></div>
+        <div class="absolute top-24 left-4 right-4 liquid-glass rounded-3xl p-8 flex flex-col gap-6">
+            <a href="/shop" class="text-2xl font-semibold tracking-wide py-2 block border-b border-white/10 text-platinum">Shop</a>
+            <a href="/about" class="text-2xl font-semibold tracking-wide py-2 block border-b border-white/10 text-platinum">About</a>
+            <a href="/contact" class="text-2xl font-semibold tracking-wide py-2 block border-b border-white/10 text-platinum">Contact</a>
+        </div>
+    </div>
+</nav>
+
+  
+  <main>
+    <section class="relative pt-32 pb-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-8">
+            <a href="/shop" class="inline-flex items-center gap-2 text-stone-light hover:text-white transition-colors text-sm font-bold uppercase tracking-widest group">
+                <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Collection
+            </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Product Image -->
+            <div class="liquid-glass rounded-3xl overflow-hidden aspect-square">
+                <img src="/assets/products/perfect-storm-enhanced.png" alt="Perfect Storm" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Product Details -->
+            <div class="flex flex-col justify-center">
+                <div class="mb-8">
+                    <span class="px-4 py-1.5 text-xs font-bold tracking-[0.2em] text-obsidian bg-platinum uppercase rounded-full font-body shadow-lg inline-block mb-4">
+                        Goose
+                    </span>
+                    <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-4">Perfect Storm</h1>
+                    <p class="text-3xl font-bold text-ice-400 font-body">$189.99</p>
+                </div>
+
+                <div class="prose prose-invert prose-stone max-w-none mb-10 text-stone-light font-light text-lg leading-relaxed">
+                    <p>Handcrafted goose call engineered for performance.</p>
+
+                </div>
+
+                <button class="add-to-cart-btn inline-flex items-center justify-center px-12 py-4 bg-platinum text-obsidian font-bold rounded-full uppercase tracking-widest transition-all hover:bg-white hover:-translate-y-1 shadow-xl w-full md:w-fit"
+                        data-id="perfect-storm"
+                        data-title="Perfect Storm"
+                        data-price="189.99"
+                        data-image="/assets/products/perfect-storm-enhanced.png"
+                        data-category="Goose">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Products -->
+<section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/5">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <h2 class="text-3xl md:text-4xl font-display text-white">You May Also Like</h2>
+        <a href="/shop" class="text-ice-400 font-bold uppercase tracking-widest text-xs hover:text-white transition-colors">View All</a>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+            
+                
+                
+
+<div class="product-card group relative bg-obsidian-light/30 rounded-3xl overflow-hidden border border-white/5 hover:border-ice-500/50 transition-all duration-500 shadow-xl flex flex-col h-full"
+     data-species="Duck"
+     data-material="Acrylic"
+     data-style="Single Reed"
+     data-category="duck sub-gauge">
+    
+    <!-- Image Container -->
+    <a href="/products/saweet-16/" class="relative aspect-square overflow-hidden bg-obsidian block group-hover:cursor-pointer">
+        <img src="/assets/products/saweet-16-enhanced.png" 
+             alt="Saweet 16" 
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+        
+        <!-- Category Badges -->
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 z-20">
+            
+            <div class="category-tag ">
+                Duck
+            </div>
+            
+            <div class="category-tag tag-sub-gauge">
+                Sub-Gauge
+            </div>
+            
+        </div>
+    </a>
+
+    <!-- Content -->
+    <div class="p-6 flex flex-col flex-grow">
+        <div class="flex justify-between items-start mb-2">
+            <a href="/products/saweet-16/" class="block group-hover:cursor-pointer">
+                <h3 class="text-xl font-display text-white group-hover:text-ice-400 transition-colors">Saweet 16</h3>
+            </a>
+            <span class="text-ice-400 font-bold">$129.99</span>
+        </div>
+        
+        <p class="text-stone-light text-sm font-light mb-6 flex-grow line-clamp-2">
+            Smaller, lighter, and faster, just like your sub-gauge shotgun. When you need to get on the birds in a hurry with speed and quickness but still have all the power you could ever need.
+        </p>
+
+        <div class="flex gap-3">
+            <button class="add-to-cart-btn flex-grow px-6 py-3 bg-platinum text-obsidian text-xs font-bold rounded-full uppercase tracking-widest transition-all hover:bg-white hover:-translate-y-1 shadow-lg"
+                    data-id="saweet-16"
+                    data-title="Saweet 16"
+                    data-price="129.99"
+                    data-image="/assets/products/saweet-16-enhanced.png"
+                    data-category="duck sub-gauge">
+                Add to Cart
+            </button>
+            
+            <button class="listen-demo-btn p-3 border border-white/10 rounded-full text-platinum hover:bg-white/5 transition-all"
+                    data-audio="https://www.soundjay.com/nature/sounds/duck-quack-1.mp3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </button>
+            
+        </div>
+    </div>
+</div>
+
+            
+        
+            
+        
+            
+                
+                
+
+<div class="product-card group relative bg-obsidian-light/30 rounded-3xl overflow-hidden border border-white/5 hover:border-ice-500/50 transition-all duration-500 shadow-xl flex flex-col h-full"
+     data-species="Goose"
+     data-material="Acrylic"
+     data-style="Single Reed"
+     data-category="goose">
+    
+    <!-- Image Container -->
+    <a href="/products/mile-high/" class="relative aspect-square overflow-hidden bg-obsidian block group-hover:cursor-pointer">
+        <img src="/assets/products/mile-high-enhanced.png" 
+             alt="Mile High" 
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+        
+        <!-- Category Badges -->
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 z-20">
+            
+            <div class="category-tag ">
+                Goose
+            </div>
+            
+        </div>
+    </a>
+
+    <!-- Content -->
+    <div class="p-6 flex flex-col flex-grow">
+        <div class="flex justify-between items-start mb-2">
+            <a href="/products/mile-high/" class="block group-hover:cursor-pointer">
+                <h3 class="text-xl font-display text-white group-hover:text-ice-400 transition-colors">Mile High</h3>
+            </a>
+            <span class="text-ice-400 font-bold">$189.99</span>
+        </div>
+        
+        <p class="text-stone-light text-sm font-light mb-6 flex-grow line-clamp-2">
+            Premium goose call for high-altitude performance.
+        </p>
+
+        <div class="flex gap-3">
+            <button class="add-to-cart-btn flex-grow px-6 py-3 bg-platinum text-obsidian text-xs font-bold rounded-full uppercase tracking-widest transition-all hover:bg-white hover:-translate-y-1 shadow-lg"
+                    data-id="mile-high"
+                    data-title="Mile High"
+                    data-price="189.99"
+                    data-image="/assets/products/mile-high-enhanced.png"
+                    data-category="goose">
+                Add to Cart
+            </button>
+            
+            <button class="listen-demo-btn p-3 border border-white/10 rounded-full text-platinum hover:bg-white/5 transition-all"
+                    data-audio="https://www.soundjay.com/nature/sounds/duck-quack-1.mp3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </button>
+            
+        </div>
+    </div>
+</div>
+
+            
+        
+            
+                
+                
+
+<div class="product-card group relative bg-obsidian-light/30 rounded-3xl overflow-hidden border border-white/5 hover:border-ice-500/50 transition-all duration-500 shadow-xl flex flex-col h-full"
+     data-species="Duck"
+     data-material="Acrylic"
+     data-style="Single Reed"
+     data-category="duck">
+    
+    <!-- Image Container -->
+    <a href="/products/down-draft/" class="relative aspect-square overflow-hidden bg-obsidian block group-hover:cursor-pointer">
+        <img src="/assets/products/down-draft-enhanced.png" 
+             alt="Down Draft" 
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+        
+        <!-- Category Badges -->
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 z-20">
+            
+            <div class="category-tag ">
+                Duck
+            </div>
+            
+        </div>
+    </a>
+
+    <!-- Content -->
+    <div class="p-6 flex flex-col flex-grow">
+        <div class="flex justify-between items-start mb-2">
+            <a href="/products/down-draft/" class="block group-hover:cursor-pointer">
+                <h3 class="text-xl font-display text-white group-hover:text-ice-400 transition-colors">Down Draft</h3>
+            </a>
+            <span class="text-ice-400 font-bold">$149.99</span>
+        </div>
+        
+        <p class="text-stone-light text-sm font-light mb-6 flex-grow line-clamp-2">
+            Precision duck call for drawing them in close.
+        </p>
+
+        <div class="flex gap-3">
+            <button class="add-to-cart-btn flex-grow px-6 py-3 bg-platinum text-obsidian text-xs font-bold rounded-full uppercase tracking-widest transition-all hover:bg-white hover:-translate-y-1 shadow-lg"
+                    data-id="down-draft"
+                    data-title="Down Draft"
+                    data-price="149.99"
+                    data-image="/assets/products/down-draft-enhanced.png"
+                    data-category="duck">
+                Add to Cart
+            </button>
+            
+            <button class="listen-demo-btn p-3 border border-white/10 rounded-full text-platinum hover:bg-white/5 transition-all"
+                    data-audio="https://www.soundjay.com/nature/sounds/duck-quack-1.mp3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </button>
+            
+        </div>
+    </div>
+</div>
+
+            
+        
+    </div>
+</section>
+
+  </main>
+  
+  <div id="cart-sidebar-wrapper" class="hidden">
+    <!-- Backdrop -->
+    <div id="cart-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] opacity-0 transition-opacity duration-300"></div>
+
+    <!-- Sidebar -->
+    <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-full max-w-md bg-obsidian-light border-l border-white/10 z-[70] flex flex-col shadow-2xl translate-x-full transition-transform duration-500 ease-in-out">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-6 border-b border-white/10">
+            <div class="flex items-center gap-3">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-platinum"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <h2 class="text-2xl font-display font-bold text-white">Your Cart</h2>
+            </div>
+            <button id="close-cart" class="p-2 rounded-full hover:bg-white/10 transition-colors text-stone-light hover:text-white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <!-- Cart Items -->
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Empty State (default) -->
+            <div id="cart-empty-state" class="flex flex-col items-center justify-center h-full text-center">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-white/20 mb-4"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <p class="text-stone-light text-lg">Your cart is empty</p>
+                <p class="text-white/40 text-sm mt-2">Add some calls to get started</p>
+            </div>
+            <!-- Dynamic Items will be injected here -->
+            <div id="cart-items-list" class="space-y-4 hidden"></div>
+        </div>
+
+        <!-- Footer -->
+        <div id="cart-footer" class="p-6 border-t border-white/10 space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <span class="text-stone-light text-lg">Subtotal</span>
+                <span id="cart-subtotal" class="text-white font-display font-bold text-2xl">$0.00</span>
+            </div>
+            <button id="cart-checkout-btn" class="w-full py-4 bg-platinum text-obsidian font-bold rounded-full hover:bg-white transition-colors uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(228,228,231,0.2)]">
+                Checkout
+            </button>
+        </div>
+    </div>
+</div>
+
+  <div id="upsell-modal-wrapper" class="hidden">
+    <!-- Backdrop -->
+    <div id="upsell-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[80] opacity-0 transition-opacity duration-300"></div>
+
+    <!-- Modal -->
+    <div id="upsell-modal" class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg z-[90] p-4 scale-90 opacity-0 transition-all duration-300">
+        <div class="bg-obsidian-light rounded-3xl border border-white/10 overflow-hidden shadow-2xl relative">
+            <!-- Close Button -->
+            <button id="close-upsell" class="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 transition-colors text-stone-light hover:text-white z-10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+
+            <!-- Product Image -->
+            <div class="relative h-64 bg-obsidian-highlight overflow-hidden">
+                <img id="upsell-image" src="" alt="Upsell Product" class="w-full h-full object-cover opacity-80">
+                <div class="absolute inset-0 bg-gradient-to-t from-obsidian-light via-transparent to-transparent"></div>
+                <div class="absolute top-4 left-4 bg-platinum text-obsidian px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest">
+                    Best Seller
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-8 text-center">
+                <h2 class="text-3xl font-display font-bold text-white mb-4">Complete Your Lanyard</h2>
+                <p class="text-stone-light text-lg mb-6 leading-relaxed">
+                    Most hunters carry both. Add a <span id="upsell-category-label" class="text-platinum font-semibold">Duck</span> Call to be ready for anything.
+                </p>
+
+                <!-- Product Card Small -->
+                <div class="bg-obsidian rounded-2xl p-5 mb-8 border border-white/5 flex items-center gap-4 text-left">
+                    <div class="w-16 h-16 rounded-xl overflow-hidden bg-obsidian-highlight flex-shrink-0">
+                        <img id="upsell-thumb" src="" alt="Thumbnail" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <h3 id="upsell-title" class="text-white font-display font-medium">Product Name</h3>
+                        <p id="upsell-category" class="text-xs text-stone-light uppercase tracking-wider">Category</p>
+                    </div>
+                    <span id="upsell-price" class="text-platinum font-bold text-xl">$0.00</span>
+                </div>
+
+                <!-- Actions -->
+                <div class="space-y-3">
+                    <button id="accept-upsell" class="w-full py-4 bg-platinum text-obsidian font-bold rounded-full hover:bg-white transition-all uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(228,228,231,0.3)] flex items-center justify-center gap-2 group hover:scale-[1.02]">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                        Yes, Add to Order
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                    <button id="decline-upsell" class="w-full py-4 border border-white/20 hover:bg-white/5 text-white font-bold rounded-full transition-all uppercase tracking-widest text-sm">
+                        No, Continue to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <footer class="border-t border-white/5 bg-obsidian-light/50 backdrop-blur-md py-20">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+        <a href="/" class="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 flex items-center justify-center">
+                    <svg viewBox="0 0 64 64" class="w-full h-full text-white fill-current" xmlns="http://www.w3.org/2000/svg" role="img">
+                        <title>Cold Front Calls Logo</title>
+                        <path d="M 20 10 Q 50 32 20 54" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
+                        <path d="M 30 18 L 42 24 L 33 30 Z" />
+                        <path d="M 35 26 L 47 32 L 38 38 Z" />
+                        <path d="M 30 34 L 42 40 L 33 46 Z" />
+                    </svg>
+                </div>
+                <span class="text-white whitespace-nowrap pt-1" style="font-family: 'Great Vibes', cursive; font-size: 2.2rem;">
+                    Cold Front Calls
+                </span>
+            </div>
+        </a>
+
+        <div class="flex items-center gap-8 text-sm text-stone-light">
+            <a href="https://www.facebook.com/profile.php?id=100063501552972" target="_blank" class="hover:text-white transition-colors" aria-label="Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="/shop" class="hover:text-white transition-colors">Shop</a>
+            <a href="/about" class="hover:text-white transition-colors">About</a>
+            <a href="/contact" class="hover:text-white transition-colors">Contact</a>
+        </div>
+
+        <div class="text-stone-light text-xs tracking-wide">© 2026 Cold Front Calls. All rights reserved.</div>
+    </div>
+</footer>
+
+  
+  
+  
+  
+  
+    
+    
+  
+    
+    
+      
+    
+  
+    
+    
+  
+    
+      
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+  <script>
+    window.COLD_FRONT_SITE = {"title":"Cold Front Calls","description":"Handcrafted, premium custom duck and goose calls. Engineered for performance and built for the hunt.","url":"https://coldfrontcalls.com","author":{"name":"Cold Front Calls","email":"thecoldfrontcalls@gmail.com"},"social":{"facebook":"https://www.facebook.com/profile.php?id=100063501552972","instagram":"https://www.instagram.com/coldfrontcalls/"},"upsells":{"duckProduct":"down-draft","gooseProduct":"perfect-storm","enable":true}};
+    window.COLD_FRONT_UPSELLS = {
+      duck: {
+        id: "down-draft",
+        name: "Down Draft",
+        price: 149.99,
+        image: "/assets/products/down-draft-enhanced.png",
+        category: "Duck"
+      },
+      goose: {
+        id: "perfect-storm",
+        name: "Perfect Storm",
+        price: 189.99,
+        image: "/assets/products/perfect-storm-enhanced.png",
+        category: "Goose"
+      }
+    };
+  </script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cart.js"></script>
+  
+  
+</body>
+</html>

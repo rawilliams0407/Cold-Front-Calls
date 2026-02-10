@@ -120,6 +120,13 @@ body {
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     }
 
+    .nav-scrolled {
+        background-color: rgba(8, 8, 31, 1) !important;
+        /* Solid Obsidian */
+        border-color: rgba(14, 165, 233, 0.3) !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8) !important;
+    }
+
     /* Background Colors */
     .bg-obsidian {
         background-color: #08081F !important;
@@ -291,6 +298,10 @@ body {
     }
 }
 
+.ken-burns {
+    animation: kenBurns 20s ease-in-out infinite alternate;
+}
+
 @keyframes kenBurns {
     0% {
         transform: scale(1) translate(0, 0);
@@ -317,6 +328,43 @@ body {
     animation: pulse-glow 2s ease-in-out infinite;
 }
 
+
+/* ===== CATEGORY TAGS ===== */
+.category-tag {
+    background: rgba(228, 228, 231, 0.95);
+    color: #08081F !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    box-shadow:
+        0 0 20px rgba(228, 228, 231, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.category-tag:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 25px rgba(56, 189, 248, 0.8),
+        0 8px 20px rgba(0, 0, 0, 0.5);
+    border-color: #38bdf8;
+}
+
+/* Sub-Gauge specific style if needed */
+.tag-sub-gauge {
+    background: rgba(34, 211, 238, 0.9);
+    /* Ice Blue */
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+}
+
 /* ===== GLOBAL ===== */
 html {
     scroll-behavior: smooth;
@@ -326,4 +374,43 @@ html {
 ::selection {
     background-color: #38bdf8;
     color: #08081F;
+}
+
+/* ===== MOBILE RESPONSIVENESS FIXES ===== */
+
+/* Hide alt text on background images */
+.inset-0 img {
+    color: transparent;
+    text-indent: -9999px;
+    font-size: 0;
+}
+
+/* Navigation header adjustments for small screens */
+@media (max-width: 374px) {
+    #nav-inner {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    #nav-inner .text-white[style*="Great Vibes"] {
+        font-size: 1.2rem !important;
+    }
+}
+
+@media (max-width: 320px) {
+    #nav-inner .text-white[style*="Great Vibes"] {
+        font-size: 1rem !important;
+    }
+
+    #nav-inner .w-11 {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+/* Shop page dropdown - ensure text fits properly */
+#category-filter {
+    min-width: 220px;
+    padding-right: 2.5rem;
 }

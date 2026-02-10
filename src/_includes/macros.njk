@@ -1,0 +1,56 @@
+{% macro productCard(product) %}
+{% set categories = product.data.category if product.data.category is iterable and product.data.category is not string else ([product.data.category] if product.data.category else []) %}
+<div class="product-card group relative bg-obsidian-light/30 rounded-3xl overflow-hidden border border-white/5 hover:border-ice-500/50 transition-all duration-500 shadow-xl flex flex-col h-full"
+     data-species="{{ product.data.species }}"
+     data-material="{{ product.data.material }}"
+     data-style="{{ product.data.style }}"
+     data-category="{{ categories | join(' ') | lower }}">
+    
+    <!-- Image Container -->
+    <a href="{{ product.url }}" class="relative aspect-square overflow-hidden bg-obsidian block group-hover:cursor-pointer">
+        <img src="{{ product.data.image }}" 
+             alt="{{ product.data.title }}" 
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+        
+        <!-- Category Badges -->
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 z-20">
+            {% for cat in categories %}
+            <div class="category-tag {{ 'tag-sub-gauge' if cat | lower == 'sub-gauge' }}">
+                {{ cat }}
+            </div>
+            {% endfor %}
+        </div>
+    </a>
+
+    <!-- Content -->
+    <div class="p-6 flex flex-col flex-grow">
+        <div class="flex justify-between items-start mb-2">
+            <a href="{{ product.url }}" class="block group-hover:cursor-pointer">
+                <h3 class="text-xl font-display text-white group-hover:text-ice-400 transition-colors">{{ product.data.title }}</h3>
+            </a>
+            <span class="text-ice-400 font-bold">${{ product.data.price }}</span>
+        </div>
+        
+        <p class="text-stone-light text-sm font-light mb-6 flex-grow line-clamp-2">
+            {{ product.data.description or product.templateContent | striptags | truncate(100) }}
+        </p>
+
+        <div class="flex gap-3">
+            <button class="add-to-cart-btn flex-grow px-6 py-3 bg-platinum text-obsidian text-xs font-bold rounded-full uppercase tracking-widest transition-all hover:bg-white hover:-translate-y-1 shadow-lg"
+                    data-id="{{ product.fileSlug }}"
+                    data-title="{{ product.data.title }}"
+                    data-price="{{ product.data.price }}"
+                    data-image="{{ product.data.image }}"
+                    data-category="{{ categories | join(' ') | lower }}">
+                Add to Cart
+            </button>
+            {% if product.data.audioUrl %}
+            <button class="listen-demo-btn p-3 border border-white/10 rounded-full text-platinum hover:bg-white/5 transition-all"
+                    data-audio="{{ product.data.audioUrl }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endmacro %}

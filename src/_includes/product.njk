@@ -1,0 +1,60 @@
+---
+layout: base
+---
+<section class="relative pt-32 pb-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-8">
+            <a href="/shop" class="inline-flex items-center gap-2 text-stone-light hover:text-white transition-colors text-sm font-bold uppercase tracking-widest group">
+                <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Collection
+            </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Product Image -->
+            <div class="liquid-glass rounded-3xl overflow-hidden aspect-square">
+                <img src="{{ image }}" alt="{{ title }}" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Product Details -->
+            <div class="flex flex-col justify-center">
+                <div class="mb-8">
+                    <span class="px-4 py-1.5 text-xs font-bold tracking-[0.2em] text-obsidian bg-platinum uppercase rounded-full font-body shadow-lg inline-block mb-4">
+                        {{ category }}
+                    </span>
+                    <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-4">{{ title }}</h1>
+                    <p class="text-3xl font-bold text-ice-400 font-body">${{ price }}</p>
+                </div>
+
+                <div class="prose prose-invert prose-stone max-w-none mb-10 text-stone-light font-light text-lg leading-relaxed">
+                    {{ content | safe }}
+                </div>
+
+                <button class="add-to-cart-btn inline-flex items-center justify-center px-12 py-4 bg-platinum text-obsidian font-bold rounded-full uppercase tracking-widest transition-all hover:bg-white hover:-translate-y-1 shadow-xl w-full md:w-fit"
+                        data-id="{{ page.fileSlug }}"
+                        data-title="{{ title }}"
+                        data-price="{{ price }}"
+                        data-image="{{ image }}"
+                        data-category="{{ category }}">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Products -->
+<section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/5">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <h2 class="text-3xl md:text-4xl font-display text-white">You May Also Like</h2>
+        <a href="/shop" class="text-ice-400 font-bold uppercase tracking-widest text-xs hover:text-white transition-colors">View All</a>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {% for product in collections.products | limit(4) %}
+            {% if product.url != page.url %}
+                {% from "macros.njk" import productCard %}
+                {{ productCard(product) }}
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>

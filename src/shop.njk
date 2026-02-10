@@ -1,0 +1,79 @@
+---
+layout: base
+title: Shop All Calls
+---
+
+{% from "macros.njk" import productCard %}
+
+<!-- Hero Banner -->
+<section class="relative pt-32 pb-20 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-b from-obsidian via-obsidian/95 to-obsidian z-10"></div>
+        <img src="/assets/hero-slideshow/01.jpg" class="w-full h-full object-cover opacity-30" alt="Shop Background">
+    </div>
+
+    <div class="relative z-20 max-w-7xl mx-auto px-6">
+        <div class="text-center">
+            <h2 class="tracking-[0.3em] uppercase text-sm font-bold text-platinum mb-4">
+                Premium Waterfowl Calls
+            </h2>
+            <h1 class="text-6xl md:text-8xl font-display font-bold text-white mb-6">
+                The Collection
+            </h1>
+            <p class="text-stone-light text-lg max-w-2xl mx-auto font-light">
+                Engineered from my lathe to your lanyard for the waterfowlers that want a call made how you want it, not off the shelf that gives you award-winning sound quality and runnability with no shortcuts.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Product Grid Section -->
+<section class="max-w-7xl mx-auto px-6 py-16">
+    <!-- Filter Bar -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-12">
+        <p class="text-stone-light">
+            Showing <span id="product-count" class="text-white font-medium">{{ collections.products.length }}</span> products
+        </p>
+
+        <!-- Category Filter -->
+        <div class="flex flex-wrap gap-4 w-full sm:w-auto">
+            <div class="relative min-w-[240px] w-full sm:w-auto">
+                <label class="block text-[10px] uppercase tracking-widest text-stone-light mb-2 ml-2">Category</label>
+                <select id="category-filter" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-platinum appearance-none focus:outline-none focus:border-ice-500/50 cursor-pointer">
+                    <option value="all">All Calls</option>
+                    <option value="duck">Duck Calls</option>
+                    <option value="goose">Goose Calls</option>
+                    <option value="sub-gauge">Sub-Gauge</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for product in collections.products %}
+            {{ productCard(product) }}
+        {% endfor %}
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="hidden text-center py-20">
+        <p class="text-stone-light text-lg">No products found for the selected filters.</p>
+        <button id="reset-filters" class="mt-4 text-ice-400 hover:text-white transition-colors">Clear all filters</button>
+    </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="max-w-7xl mx-auto px-6 py-16 mb-12">
+    <div class="liquid-glass rounded-3xl p-12 text-center">
+        <h3 class="text-3xl md:text-4xl font-display text-white mb-4">
+            Can't Find What You're Looking For?
+        </h3>
+        <p class="text-stone-light mb-8 max-w-xl mx-auto">
+            We offer custom builds and limited edition runs. Reach out to discuss your perfect call.
+        </p>
+        <a href="/contact" class="inline-flex items-center px-10 py-4 bg-platinum text-obsidian font-bold text-sm rounded-full shadow-[0_0_20px_rgba(228,228,231,0.2)] transition-all hover:bg-white uppercase tracking-widest hover:-translate-y-1">
+            Contact Us
+        </a>
+    </div>
+</section>

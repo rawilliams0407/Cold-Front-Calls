@@ -1,0 +1,58 @@
+<nav class="fixed w-full z-50 top-6 pointer-events-none">
+    <div id="nav-inner" class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between liquid-glass rounded-full pointer-events-auto transition-all duration-300 hover:bg-obsidian/40 mx-4 md:mx-auto">
+        <a href="/" class="flex items-center gap-3 min-w-0">
+            <div class="flex items-center gap-2 sm:gap-4 min-w-0">
+                <div class="w-9 h-9 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center">
+                    <svg viewBox="0 0 64 64" class="w-full h-full text-white fill-current" xmlns="http://www.w3.org/2000/svg" role="img">
+                        <title>Cold Front Calls Logo</title>
+                        <path d="M 20 10 Q 50 32 20 54" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
+                        <path d="M 30 18 L 42 24 L 33 30 Z" />
+                        <path d="M 35 26 L 47 32 L 38 38 Z" />
+                        <path d="M 30 34 L 42 40 L 33 46 Z" />
+                    </svg>
+                </div>
+                <span class="text-white whitespace-nowrap pt-1 truncate" style="font-family: 'Great Vibes', cursive; font-size: clamp(1.1rem, 4vw, 1.6rem);">
+                    Cold Front Calls
+                </span>
+            </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-10 font-medium text-lg tracking-wide text-platinum">
+            <a href="/shop" class="hover:text-white transition-colors relative group {{ 'text-white' if page.url == '/shop/' }}">
+                Shop
+                <span class="absolute -bottom-1 left-0 h-[1px] bg-platinum transition-all {{ 'w-full' if page.url == '/shop/' else 'w-0 group-hover:w-full' }}"></span>
+            </a>
+            <a href="/about" class="hover:text-white transition-colors relative group {{ 'text-white' if page.url == '/about/' }}">
+                About
+                <span class="absolute -bottom-1 left-0 h-[1px] bg-platinum transition-all {{ 'w-full' if page.url == '/about/' else 'w-0 group-hover:w-full' }}"></span>
+            </a>
+            <a href="/contact" class="hover:text-white transition-colors relative group {{ 'text-white' if page.url == '/contact/' }}">
+                Contact
+                <span class="absolute -bottom-1 left-0 h-[1px] bg-platinum transition-all {{ 'w-full' if page.url == '/contact/' else 'w-0 group-hover:w-full' }}"></span>
+            </a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <a href="/checkout" id="cart-toggle" class="text-white hover:text-platinum-light transition-colors relative">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <div id="cart-count" class="hidden absolute -top-2 -right-2 w-5 h-5 bg-platinum text-obsidian rounded-full flex items-center justify-center text-xs font-bold">0</div>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="md:hidden text-white hover:text-platinum-light transition-colors p-1">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay (Hidden by default) -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-40 md:hidden pointer-events-auto">
+        <div class="absolute inset-0 bg-obsidian/80 backdrop-blur-md" id="mobile-menu-close"></div>
+        <div class="absolute top-24 left-4 right-4 liquid-glass rounded-3xl p-8 flex flex-col gap-6">
+            <a href="/shop" class="text-2xl font-semibold tracking-wide py-2 block border-b border-white/10 {{ 'text-white' if page.url == '/shop/' else 'text-platinum' }}">Shop</a>
+            <a href="/about" class="text-2xl font-semibold tracking-wide py-2 block border-b border-white/10 {{ 'text-white' if page.url == '/about/' else 'text-platinum' }}">About</a>
+            <a href="/contact" class="text-2xl font-semibold tracking-wide py-2 block border-b border-white/10 {{ 'text-white' if page.url == '/contact/' else 'text-platinum' }}">Contact</a>
+        </div>
+    </div>
+</nav>
