@@ -1,0 +1,36 @@
+{
+    "heroSubtitle": "Our Story",
+    "heroTitle": "Hunt the",
+    "heroTitleAccent": "Front",
+    "heroDescription": "Born from a passion for waterfowl hunting and a dedication to craft, Cold Front Calls creates premium acrylic calls that cut through any conditions.",
+    "storyLabel": "The Beginning",
+    "storyHeading": "Started in the Blind",
+    "storyParagraphs": [
+        "Cold Front Calls was founded with a simple mission: create waterfowl calls that perform when it matters most. After years of hunting in every condition imaginable, we knew what was missing from the market.",
+        "Each call starts as a solid block of premium acrylic, carefully selected for its acoustic properties. From there, it's hand-turned on a precision lathe, shaped with intention and expertise developed over thousands of hours.",
+        "The result? A call that delivers tone so cutting it'll bring birds in through the worst fronts. That's why we say: Hunt the Front."
+    ],
+    "valuesLabel": "What We Stand For",
+    "valuesHeading": "Our Values",
+    "values": [
+        {
+            "title": "Precision Tone",
+            "description": "Every call is tuned to cut through any weather condition, delivering crystal-clear sound that carries."
+        },
+        {
+            "title": "Handcrafted Quality",
+            "description": "Each piece is hand-turned on a lathe, ensuring unique character and premium craftsmanship in every call."
+        },
+        {
+            "title": "Competition Tested",
+            "description": "Our calls have earned recognition in competitions across the country, proving their real-world performance."
+        },
+        {
+            "title": "Hunter Community",
+            "description": "Built by hunters, for hunters. We understand the demands of the field and build accordingly."
+        }
+    ],
+    "ctaHeading": "Ready to Experience the Difference?",
+    "ctaDescription": "Browse our collection and find the perfect call for your next hunt.",
+    "ctaButtonText": "Shop Collection"
+}

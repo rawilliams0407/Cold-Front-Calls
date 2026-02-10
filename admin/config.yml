@@ -76,20 +76,90 @@ collections:
                   display_fields: ["title"]
                 }
 
+      - name: "footer"
+        label: "Footer"
+        file: "src/_data/footer.json"
+        fields:
+          - { label: "Copyright Text", name: "copyright", widget: "string" }
+          - { label: "Facebook URL", name: "facebookUrl", widget: "string" }
+
   - name: "pages"
     label: "Pages"
     files:
+      - name: "home"
+        label: "Home Page"
+        file: "src/_data/homepage.json"
+        fields:
+          - { label: "Hero Tagline", name: "heroTagline", widget: "string", hint: "Small text above the main headline (e.g. 'Hunt the Front')" }
+          - { label: "Hero Headline", name: "heroHeadline", widget: "string", hint: "Main headline text (e.g. 'Cold Front Calls')" }
+          - { label: "Hero Description", name: "heroDescription", widget: "text", hint: "Paragraph under the headline" }
+          - { label: "Hero Button Text", name: "heroButtonText", widget: "string" }
+          - { label: "Duck Card Title", name: "categoryDuckTitle", widget: "string" }
+          - { label: "Goose Card Title", name: "categoryGooseTitle", widget: "string" }
+          - { label: "Sub-Gauge Card Title", name: "categorySubGaugeTitle", widget: "string" }
+          - { label: "Best Seller Badge", name: "bestSellerBadge", widget: "string" }
+          - { label: "Best Seller Category", name: "bestSellerCategory", widget: "string" }
+          - { label: "Best Seller Name", name: "bestSellerTitle", widget: "string" }
+          - { label: "Best Seller Description", name: "bestSellerDescription", widget: "text" }
+          - { label: "Best Seller Image", name: "bestSellerImage", widget: "image" }
+          - { label: "Best Seller Button Text", name: "bestSellerButtonText", widget: "string" }
+          - { label: "Best Seller Link", name: "bestSellerLink", widget: "string" }
+          - { label: "Lineup Heading", name: "lineupHeading", widget: "string" }
+          - { label: "Lineup Subheading", name: "lineupSubheading", widget: "string" }
+          - { label: "Lineup Link Text", name: "lineupLinkText", widget: "string" }
+          - { label: "Field Reports Label", name: "fieldReportsLabel", widget: "string" }
+          - { label: "Field Reports Heading", name: "fieldReportsHeading", widget: "string" }
+          - { label: "Field Reports Subheading", name: "fieldReportsSubheading", widget: "string" }
+
+      - name: "shop"
+        label: "Shop Page"
+        file: "src/_data/shoppage.json"
+        fields:
+          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "string" }
+          - { label: "Hero Title", name: "heroTitle", widget: "string" }
+          - { label: "Hero Description", name: "heroDescription", widget: "text" }
+          - { label: "CTA Heading", name: "ctaHeading", widget: "string", hint: "Bottom section heading" }
+          - { label: "CTA Description", name: "ctaDescription", widget: "text" }
+          - { label: "CTA Button Text", name: "ctaButtonText", widget: "string" }
+
       - name: "about"
         label: "About Page"
-        file: "src/about.njk"
+        file: "src/_data/aboutpage.json"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Layout", name: "layout", widget: "hidden", default: "base" }
+          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "string" }
+          - { label: "Hero Title", name: "heroTitle", widget: "string", hint: "Main part of title (e.g. 'Hunt the')" }
+          - { label: "Hero Title Accent", name: "heroTitleAccent", widget: "string", hint: "Styled accent word (e.g. 'Front')" }
+          - { label: "Hero Description", name: "heroDescription", widget: "text" }
+          - { label: "Story Label", name: "storyLabel", widget: "string" }
+          - { label: "Story Heading", name: "storyHeading", widget: "string" }
+          - label: "Story Paragraphs"
+            name: "storyParagraphs"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - { label: "Values Label", name: "valuesLabel", widget: "string" }
+          - { label: "Values Heading", name: "valuesHeading", widget: "string" }
+          - label: "Values"
+            name: "values"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - { label: "CTA Heading", name: "ctaHeading", widget: "string" }
+          - { label: "CTA Description", name: "ctaDescription", widget: "text" }
+          - { label: "CTA Button Text", name: "ctaButtonText", widget: "string" }
 
       - name: "contact"
         label: "Contact Page"
-        file: "src/contact.njk"
+        file: "src/_data/contactpage.json"
         fields:
+          - { label: "Subtitle", name: "subtitle", widget: "string" }
           - { label: "Title", name: "title", widget: "string" }
-          - { label: "Layout", name: "layout", widget: "hidden", default: "base" }
-
+          - { label: "Phone Number", name: "phone", widget: "string" }
+          - { label: "Email Address", name: "email", widget: "string" }
+          - { label: "Facebook Label", name: "facebookLabel", widget: "string" }
+          - { label: "Facebook URL", name: "facebookUrl", widget: "string" }
+          - { label: "Form Name Label", name: "formNameLabel", widget: "string" }
+          - { label: "Form Email Label", name: "formEmailLabel", widget: "string" }
+          - { label: "Form Message Label", name: "formMessageLabel", widget: "string" }
+          - { label: "Form Button Text", name: "formButtonText", widget: "string" }

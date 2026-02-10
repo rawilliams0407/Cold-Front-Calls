@@ -18,7 +18,7 @@
         </a>
 
         <div class="flex items-center gap-8 text-sm text-stone-light">
-            <a href="https://www.facebook.com/profile.php?id=100063501552972" target="_blank" class="hover:text-white transition-colors" aria-label="Facebook">
+            <a href="{{ footer.facebookUrl }}" target="_blank" class="hover:text-white transition-colors" aria-label="Facebook">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
             </a>
             <a href="/shop" class="hover:text-white transition-colors">Shop</a>
@@ -26,6 +26,6 @@
             <a href="/contact" class="hover:text-white transition-colors">Contact</a>
         </div>
 
-        <div class="text-stone-light text-xs tracking-wide">© 2026 Cold Front Calls. All rights reserved.</div>
+        <div class="text-stone-light text-xs tracking-wide">{{ footer.copyright }}</div>
     </div>
 </footer>

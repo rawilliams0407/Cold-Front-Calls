@@ -13,8 +13,8 @@ title: Contact Us
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <!-- Contact Info -->
             <div class="liquid-glass rounded-3xl p-12">
-                <h2 class="tracking-[0.3em] uppercase text-sm font-bold text-platinum mb-4">Get In Touch</h2>
-                <h1 class="text-4xl md:text-5xl font-display font-bold text-white mb-8">Reach Out</h1>
+                <h2 class="tracking-[0.3em] uppercase text-sm font-bold text-platinum mb-4">{{ contactpage.subtitle }}</h2>
+                <h1 class="text-4xl md:text-5xl font-display font-bold text-white mb-8">{{ contactpage.title }}</h1>
                 
                 <div class="space-y-8">
                     <div class="flex items-start gap-4">
@@ -23,7 +23,7 @@ title: Contact Us
                         </div>
                         <div>
                             <p class="text-[10px] uppercase tracking-widest text-platinum-dark mb-1">Phone</p>
-                            <a href="tel:1-269-830-3165" class="text-white hover:text-ice-400 transition-colors">1 (269) 830-3165</a>
+                            <a href="tel:{{ contactpage.phone | replace(' ', '') | replace('(', '') | replace(')', '') }}" class="text-white hover:text-ice-400 transition-colors">{{ contactpage.phone }}</a>
                         </div>
                     </div>
 
@@ -33,7 +33,7 @@ title: Contact Us
                         </div>
                         <div>
                             <p class="text-[10px] uppercase tracking-widest text-platinum-dark mb-1">Email</p>
-                            <a href="mailto:thecoldfrontcalls@gmail.com" class="text-white hover:text-ice-400 transition-colors">thecoldfrontcalls@gmail.com</a>
+                            <a href="mailto:{{ contactpage.email }}" class="text-white hover:text-ice-400 transition-colors">{{ contactpage.email }}</a>
                         </div>
                     </div>
 
@@ -43,7 +43,7 @@ title: Contact Us
                         </div>
                         <div>
                             <p class="text-[10px] uppercase tracking-widest text-platinum-dark mb-1">Facebook</p>
-                            <a href="https://www.facebook.com/profile.php?id=100063501552972" target="_blank" class="text-white hover:text-ice-400 transition-colors">Cold Front Calls</a>
+                            <a href="{{ contactpage.facebookUrl }}" target="_blank" class="text-white hover:text-ice-400 transition-colors">{{ contactpage.facebookLabel }}</a>
                         </div>
                     </div>
                 </div>
@@ -54,19 +54,19 @@ title: Contact Us
                 <form name="contact" method="POST" data-netlify="true" class="space-y-6">
                     <input type="hidden" name="form-name" value="contact" />
                     <div>
-                        <label class="block text-xs uppercase tracking-widest text-platinum-dark mb-2">Name</label>
+                        <label class="block text-xs uppercase tracking-widest text-platinum-dark mb-2">{{ contactpage.formNameLabel }}</label>
                         <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-platinum focus:outline-none focus:border-ice-500/50">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase tracking-widest text-platinum-dark mb-2">Email</label>
+                        <label class="block text-xs uppercase tracking-widest text-platinum-dark mb-2">{{ contactpage.formEmailLabel }}</label>
                         <input type="email" name="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-platinum focus:outline-none focus:border-ice-500/50">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase tracking-widest text-platinum-dark mb-2">Message</label>
+                        <label class="block text-xs uppercase tracking-widest text-platinum-dark mb-2">{{ contactpage.formMessageLabel }}</label>
                         <textarea name="message" required rows="4" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-platinum focus:outline-none focus:border-ice-500/50"></textarea>
                     </div>
                     <button type="submit" class="w-full py-4 bg-platinum text-obsidian font-bold rounded-full uppercase tracking-widest transition-all hover:bg-white hover:-translate-y-1 shadow-lg">
-                        Send Message
+                        {{ contactpage.formButtonText }}
                     </button>
                 </form>
             </div>
